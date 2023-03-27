@@ -1,0 +1,5 @@
+type Workout {
+  id: ID!
+  name: String!
+  description: String!
+}

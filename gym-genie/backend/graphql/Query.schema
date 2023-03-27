@@ -1,0 +1,10 @@
+type Query {
+  getUser(id: ID!): User!
+  getAllUsers: [User!]!
+  getSupplement(id: ID!): Supplement!
+  getAllSupplements: [Supplement!]!
+  getWorkout(id: ID!): Workout!
+  getAllWorkouts: [Workout!]!
+  getDiet(id: ID!): Diet!
+  getAllDiets: [Diet!]!
+}

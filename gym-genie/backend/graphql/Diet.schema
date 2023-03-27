@@ -1,0 +1,5 @@
+type Diet {
+  id: ID!
+  name: String!
+  description: String!
+}

@@ -1,0 +1,12 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  age: Int!
+  gender: String!
+  height: Float!
+  weight: Float!
+  workoutType: String!
+  goal: String!
+}

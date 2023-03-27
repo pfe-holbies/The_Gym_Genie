@@ -1,0 +1,5 @@
+type Supplement {
+  id: ID!
+  name: String!
+  description: String!
+}

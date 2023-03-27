@@ -1,0 +1,63 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  age: Int!
+  gender: String!
+  height: Float!
+  weight: Float!
+  workoutType: String!
+  goal: String!
+  supplements: [Supplement!]!
+  workouts: [Workout!]!
+  diets: [Diet!]!
+}
+
+type Supplement {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+type Workout {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+type Diet {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+type Query {
+  getUser(id: ID!): User!
+  getAllUsers: [User!]!
+  getSupplement(id: ID!): Supplement!
+  getAllSupplements: [Supplement!]!
+  getWorkout(id: ID!): Workout!
+  getAllWorkouts: [Workout!]!
+  getDiet(id: ID!): Diet!
+  getAllDiets: [Diet!]!
+}
+
+type Mutation {
+  createUser(name: String!, email: String!, password: String!, age: Int!, gender: String!, height: Float!, weight: Float!, workoutType: String!, goal: String!): User!
+  updateUser(id: ID!, name: String, email: String, age: Int, gender: String, height: Float, weight: Float, workoutType: String, goal: String): User!
+  deleteUser(id: ID!): User!
+  createSupplement(name: String!, description: String!): Supplement!
+  updateSupplement(id: ID!, name: String, description: String): Supplement!
+  deleteSupplement(id: ID!): Supplement!
+  createWorkout(name: String!, description: String!): Workout!
+  updateWorkout(id: ID!, name: String, description: String): Workout!
+  deleteWorkout(id: ID!): Workout!
+  createDiet(name: String!, description: String!): Diet!
+  updateDiet(id: ID!, name: String, description: String): Diet!
+  deleteDiet(id: ID!): Diet!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

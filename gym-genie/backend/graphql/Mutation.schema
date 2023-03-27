@@ -1,0 +1,14 @@
+type Mutation {
+  createUser(name: String!, email: String!, password: String!, age: Int!, gender: String!, height: Float!, weight: Float!, workoutType: String!, goal: String!): User!
+  updateUser(id: ID!, name: String, email: String, age: Int, gender: String, height: Float, weight: Float, workoutType: String, goal: String): User!
+  deleteUser(id: ID!): User!
+  createSupplement(name: String!, description: String!): Supplement!
+  updateSupplement(id: ID!, name: String, description: String): Supplement!
+  deleteSupplement(id: ID!): Supplement!
+  createWorkout(name: String!, description: String!): Workout!
+  updateWorkout(id: ID!, name: String, description: String): Workout!
+  deleteWorkout(id: ID!): Workout!
+  createDiet(name: String!, description: String!): Diet!
+  updateDiet(id: ID!, name: String, description: String): Diet!
+  deleteDiet(id: ID!): Diet!
+}
