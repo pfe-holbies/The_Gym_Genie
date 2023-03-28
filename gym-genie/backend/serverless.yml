@@ -1,0 +1,23 @@
+#yarn add aws-serverless-express
+#!yarn add aws-sdk
+
+# const awsServerlessExpress = require('aws-serverless-express');
+# const serverlessApp = awsServerlessExpress.createServer(app);
+# module.exports.handler = (event, context) => {
+  #awsServerlessExpress.proxy(serverlessApp, event, context);
+# };
+service: my-service
+#need to define service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  graphql:
+    handler: server.handler
+    events:
+      - http:
+          path: /
+          method: post
+          cors: true
