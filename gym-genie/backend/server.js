@@ -35,6 +35,16 @@ const server = new ApolloServer({
   }),
 });*/
 
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json(),
+  ),
+  defaultMeta: { service: 'my-server' },
+  transports: [new winston.transports.Console()],
+});
+
 
 server.listen(process.env.PORT, () => {
     console.log('🚀 Server ready at http://localhost:${process.env.PORT}');

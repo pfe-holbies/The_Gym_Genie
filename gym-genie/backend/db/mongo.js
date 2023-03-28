@@ -1,17 +1,15 @@
-// Import Mongoose
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Create a function to connect to the database
 const connectToDatabase = async () => {
   try {
-    // Use the Mongoose connect method to connect to your MongoDB Atlas cluster
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect('mongodb+srv://test_user2:9KYroWQYFgzAjcsD@cluster0.mejre0v.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
+      //useFindAndModify: false,
+      // useCreateIndex: true,
     });
-
     console.log('Connected to database!');
   } catch (error) {
     console.error(error);

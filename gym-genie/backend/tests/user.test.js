@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/user'); // assuming your User model is defined in a file named user.js
-import connectToDatabase from '../db/mongo';
+const connectToDatabase = require('../db/mongo');
 
 // Connect to the test database
 
