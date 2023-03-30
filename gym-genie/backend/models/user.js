@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['male', 'female', 'other'],
+    enum: ['Male', 'Female', 'Other', 'Prefer not to say', 'non-binary', 'Attack Helicopter'],
     required: true,
   },
   height: {
@@ -35,12 +35,12 @@ const userSchema = new mongoose.Schema({
   },
   workoutType: {
     type: String,
-    enum: ['beginner', 'intermediate', 'advanced', 'cardio'],
+    enum: ['beginner', 'intermediate', 'advanced', 'cardio', 'Strength'],
     required: true,
   },
   goal: {
     type: String,
-    enum: ['weight loss', 'muscle gain', 'general fitness', 'lose fat', 'lose weight'],
+    enum: ['weight loss', 'muscle gain', 'general fitness', 'lose fat', 'lose weight', 'strength'],
     required: true,
   },
   supplements: [{

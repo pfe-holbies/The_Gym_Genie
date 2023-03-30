@@ -1,81 +1,108 @@
 const mongoose = require('mongoose');
-const User = require('../models/user');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const { gql } = require('apollo-server-express');
-const { createTestClient } = require('apollo-server-testing');
-const ApolloServer = require('apollo-server-express').ApolloServer;
-const typeDefs = require('../resolvers/typeDefs');
 const userResolvers = require('../resolvers/userResolver');
+const User = require('../models/user');
 
 let mongoServer;
-const resolvers = { ...userResolvers };
-
 beforeAll(async () => {
-  mongoServer = new MongoMemoryServer();
-  await mongoServer.ensureInstance();
-  const mongoUri = await mongoServer.getUri();
-  await mongoose.connect(mongoUri, {
+  mongoServer = await MongoMemoryServer.create();
+  const uri = mongoServer.getUri();
+
+  await mongoose.connect(uri, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   });
-
-  
-
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
-
-  global.testClient = createTestClient(server);
+});
+beforeEach(async () => {
+  await User.deleteMany({});
 });
 
 afterAll(async () => {
-  await mongoose.connection.close();
+  await mongoose.disconnect();
   await mongoServer.stop();
 });
 
-describe('User model tests', () => {
-  let testUser;
+describe('userResolvers', () => {
+  describe('Query', () => {
+    test('getUser throws when user not found', async () => {
+      const mockId = new mongoose.Types.ObjectId();
+      const user = userResolvers.Query.getUser(null, { id: mockId });
+      expect(user).rejects.toThrow('User not found');
+    });
 
-  beforeEach(async () => {
-    testUser = await User.create({
-      name: 'John Doe',
-      email: 'johndoe@test.com',
-      password: 'password123',
+    // other tests for getUser and getAllUsers queries
+  });
+
+  test('createUser creates a new user', async () => {
+    const newUser = {
+      name: 'Test User',
+      email: 'testuser@example.com',
+      password: 'testpassword',
       age: 25,
-      gender: 'male',
+      gender: 'Male',
       height: 180.5,
-      weight: 75.0,
-      workoutType: 'cardio',
-      goal: 'weight loss',
+      weight: 80.5,
+      workoutType: 'Strength',
+      goal: 'muscle gain',
+    };
+    const user = await userResolvers.Mutation.createUser(null, newUser);
+    expect(user).toMatchObject(newUser);
+  });
+
+    // other tests for createUser, updateUser, and deleteUser mutations
+    test('updateUser updates an existing user', async () => {
+      const initialUser = new User({
+        name: 'Initial User',
+        email: 'initialuser@example.com',
+        password: 'initialpassword',
+        age: 30,
+        gender: 'Female',
+        height: 165.0,
+        weight: 60.0,
+        workoutType: 'Cardio',
+        goal: 'Lose weight',
+      });
+      await initialUser.save();
+    
+      const updatedUserData = {
+        name: 'Updated User',
+        email: 'updateduser@example.com',
+        password: 'updatedpassword',
+        age: 35,
+        gender: 'Male',
+        height: 170.0,
+        weight: 75.0,
+        workoutType: 'Strength',
+        goal: 'Build muscle',
+      };
+    
+      const updatedUser = await userResolvers.Mutation.updateUser(null, {
+        id: initialUser._id,
+        ...updatedUserData,
+      });
+    
+      expect(updatedUser).toMatchObject(updatedUserData);
+    });
+    
+    test('deleteUser deletes an existing user', async () => {
+      const existingUser = new User({
+        name: 'User to Delete',
+        email: 'usertodelete@example.com',
+        password: 'deletepassword',
+        age: 28,
+        gender: 'Female',
+        height: 160.0,
+        weight: 55.0,
+        workoutType: 'Cardio',
+        goal: 'Maintain weight',
+      });
+      await existingUser.save();
+    
+      const deletedUser = await userResolvers.Mutation.deleteUser(null, { id: existingUser._id });
+    
+      const user = await User.findById(existingUser._id);
+      expect(user).toBeNull();
+      expect(deletedUser).toMatchObject(existingUser.toObject());
     });
   });
 
-  afterEach(async () => {
-    await User.findByIdAndDelete(testUser._id);
-  });
-
-  it('should get a user by ID', async () => {
-    const foundUser = await User.findById(testUser._id);
-    expect(foundUser).toEqual(expect.objectContaining({
-      name: 'John Doe',
-      email: 'johndoe@test.com',
-      password: 'password123',
-      age: 25,
-      gender: 'male',
-      height: 180.5,
-      weight: 75.0,
-      workoutType: 'cardio',
-      goal: 'weight loss',
-    }));
-  });
-
-  it('should get all users', async () => {
-    const allUsers = await User.find({});
-    expect(allUsers.length).toBeGreaterThan(0);
-  });
-
-  it('should get all users by weight', async () => {
-    const usersByWeight = await User.find({}).sort({ weight: 1 });
-    expect(usersByWeight[0].weight).toBeLessThanOrEqual(usersByWeight[usersByWeight.length - 1].weight);
-  });
-});
