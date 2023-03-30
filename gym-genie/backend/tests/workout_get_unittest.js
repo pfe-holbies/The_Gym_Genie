@@ -1,0 +1,1 @@
+const workoutResolver = require('./workoutResolver');

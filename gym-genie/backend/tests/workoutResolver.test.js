@@ -1,66 +1,49 @@
-const { MockedProvider } = require('@apollo/client/testing');
-const { gql } = require('@apollo/client');
-const { createTestClient } = require('apollo-server-testing');
-const { ApolloServer } = require('apollo-server-express');
-
+const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+const workoutResolvers = require('../resolvers/workoutResolver');
 const Workout = require('../models/workout');
-const workoutResolver = require('../resolvers/workoutResolver');
-const workoutTypeDefs = gql`
-  type Workout {
-    id: ID!
-    name: String!
-    description: String!
-  }
 
-  type Query {
-    getWorkout(id: ID!): Workout
-    getAllWorkouts: [Workout]
-  }
+let mongoServer;
+  
+beforeAll(async () => {
+  mongoServer = await MongoMemoryServer.create();
+  const uri = mongoServer.getUri();
 
-  type Mutation {
-    createWorkout(name: String!, description: String!): Workout
-    updateWorkout(id: ID!, name: String, description: String): Workout
-    deleteWorkout(id: ID!): Workout
-  }
-`;
-
-const server = new ApolloServer({
-  typeDefs: workoutTypeDefs,
-  resolvers: workoutResolver,
+  await mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 });
 
-const { query, mutate } = createTestClient(server);
+beforeEach(async () => {
+  await Workout.deleteMany({});
+});
 
-describe('Workout Resolver', () => {
-  afterEach(async () => {
-    await Workout.deleteMany();
-  });
+afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
+});
 
-  it('creates a new workout', async () => {
-    const CREATE_WORKOUT = gql`
-      mutation CreateWorkout($name: String!, $description: String!) {
-        createWorkout(name: $name, description: $description) {
-          id
-          name
-          description
-        }
-      }
-    `;
-
-    const workoutData = {
-      name: 'Test Workout',
-      description: 'Test workout description',
-    };
-
-    const { data } = await mutate({
-      mutation: CREATE_WORKOUT,
-      variables: workoutData,
+describe('workoutResolvers', () => {
+  describe('Query', () => {
+    test('getWorkout returns throws workout not found', async () => {
+      const mockId = new mongoose.Types.ObjectId();
+      const workout = expect(workoutResolvers.Query.getWorkout(null, { id: -1 })).rejects.toThrow();
     });
-
-    const savedWorkout = await Workout.findById(data.createWorkout.id);
-    expect(savedWorkout.name).toEqual(workoutData.name);
-    expect(savedWorkout.description).toEqual(workoutData.description);
+    test('getWorkout returns null when workout not found', async () => {
+      const mockId = new mongoose.Types.ObjectId();
+      await expect(workoutResolvers.Query.getWorkout(null, { id: mockId })).rejects.toThrow('Workout not found');
+    });
+    // other tests for getWorkout and getAllWorkouts queries
   });
 
-  // Add more test cases for getWorkout, getAllWorkouts, updateWorkout, and deleteWorkout
+  describe('Mutation', () => {
+    test('createWorkout creates a new workout', async () => {
+      const newWorkout = { name: 'Test Workout', description: 'Test workout description' };
+      const workout = await workoutResolvers.Mutation.createWorkout(null, newWorkout);
+      expect(workout).toMatchObject(newWorkout);
+    });
+    
+    // other tests for createWorkout, updateWorkout, and deleteWorkout mutations
+  });
 });

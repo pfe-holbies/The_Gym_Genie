@@ -4,7 +4,7 @@ require('dotenv').config();
 // Create a function to connect to the database
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect('mongodb+srv://test_user2:9KYroWQYFgzAjcsD@cluster0.mejre0v.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority', {
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       //useFindAndModify: false,

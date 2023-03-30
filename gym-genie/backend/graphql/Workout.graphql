@@ -1,0 +1,16 @@
+type Workout {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+type Query {
+  getWorkout(id: ID!): Workout!
+  getAllWorkouts: [Workout!]!
+}
+
+type Mutation {
+  createWorkout(name: String!, description: String!): Workout!
+  updateWorkout(id: ID!, name: String, description: String): Workout!
+  deleteWorkout(id: ID!): Workout!
+}

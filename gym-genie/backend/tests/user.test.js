@@ -1,26 +1,42 @@
 const mongoose = require('mongoose');
-const User = require('../models/user'); // assuming your User model is defined in a file named user.js
-const connectToDatabase = require('../db/mongo');
+const User = require('../models/user');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+const { gql } = require('apollo-server-express');
+const { createTestClient } = require('apollo-server-testing');
+const ApolloServer = require('apollo-server-express').ApolloServer;
+const typeDefs = require('../resolvers/typeDefs');
+const userResolvers = require('../resolvers/userResolver');
 
-// Connect to the test database
-
-db = connectToDatabase();
+let mongoServer;
+const resolvers = { ...userResolvers };
 
 beforeAll(async () => {
-  await db;
+  mongoServer = new MongoMemoryServer();
+  await mongoServer.ensureInstance();
+  const mongoUri = await mongoServer.getUri();
+  await mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+  });
+
+  
+
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+
+  global.testClient = createTestClient(server);
 });
 
-// Disconnect from the database after all tests are done
 afterAll(async () => {
-  await mongoose.disconnect();
+  await mongoose.connection.close();
+  await mongoServer.stop();
 });
 
 describe('User model tests', () => {
-  // Initialize a test user
   let testUser;
 
   beforeEach(async () => {
-    // Create a test user with some dummy data
     testUser = await User.create({
       name: 'John Doe',
       email: 'johndoe@test.com',
@@ -30,16 +46,14 @@ describe('User model tests', () => {
       height: 180.5,
       weight: 75.0,
       workoutType: 'cardio',
-      goal: 'lose weight',
+      goal: 'weight loss',
     });
   });
 
   afterEach(async () => {
-    // Remove the test user after each test
     await User.findByIdAndDelete(testUser._id);
   });
 
-  // Test getting a user by ID
   it('should get a user by ID', async () => {
     const foundUser = await User.findById(testUser._id);
     expect(foundUser).toEqual(expect.objectContaining({
@@ -51,17 +65,15 @@ describe('User model tests', () => {
       height: 180.5,
       weight: 75.0,
       workoutType: 'cardio',
-      goal: 'lose weight',
+      goal: 'weight loss',
     }));
   });
 
-  // Test getting all users
   it('should get all users', async () => {
     const allUsers = await User.find({});
     expect(allUsers.length).toBeGreaterThan(0);
   });
 
-  // Test getting all users by weight
   it('should get all users by weight', async () => {
     const usersByWeight = await User.find({}).sort({ weight: 1 });
     expect(usersByWeight[0].weight).toBeLessThanOrEqual(usersByWeight[usersByWeight.length - 1].weight);
