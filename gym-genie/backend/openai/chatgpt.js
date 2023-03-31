@@ -4,6 +4,9 @@ const { userResolver } = require('./resolvers');
 const { prompt_map, prime_prompt } = require('./prompts');
 const dotenv = require('dotenv');
 
+const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
+
+
 dotenv.config();
 
 // Initialize OpenAI API credentials
@@ -47,12 +50,31 @@ async function handleMessage(user) {
     return response;
   }
 
+  function runChatbotThread(id) {
+    return new Promise((resolve, reject) => {
+      const worker = new Worker(__filename, { workerData: id });
+  
+      worker.on('message', resolve);
+      worker.on('error', reject);
+      worker.on('exit', (code) => {
+        if (code !== 0) {
+          reject(new Error(`Worker stopped with exit code ${code}`));
+        }
+      });
+    });
+  }
+
   async function runChatbot(id) {
-    // Get the luser from the db
-    const user = await userResolver.Query.getUser(null, { id: id });
-    //to render this in the front end
-    return await handleMessage(user);
+    if (isMainThread) {
+      // Get the user from the db and render this in the front-end
+      return await runChatbotThread(id);
+    } else {
+      // In worker thread, get the user and handle the message
+      const user = await userResolver.Query.getUser(null, { id: workerData });
+      const response = await handleMessage(user);
+      parentPort.postMessage(response);
     }
+  }
   
   
   module.exports = runChatbot;
