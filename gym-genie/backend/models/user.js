@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
   },
   goal: {
     type: String,
-    enum: ['weight loss', 'muscle gain', 'general fitness', 'lose fat', 'lose weight', 'strength'],
+    enum: ['weight loss', 'muscle gain', 'general fitness', 'lose fat', 'lose weight', 'strength', 'Cardio', 'cardio', 'Maintain weight', 'Strength'],
     required: true,
   },
   supplements: [{

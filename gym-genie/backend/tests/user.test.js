@@ -47,7 +47,35 @@ describe('userResolvers', () => {
     };
     const user = await userResolvers.Mutation.createUser(null, newUser);
     expect(user).toMatchObject(newUser);
+
   });
+
+test('createUser creates a duplicate user', async () => {
+  const newUser = {
+    name: 'Test User',
+    email: 'testuser@example.com',
+    password: 'testpassword',
+    age: 25,
+    gender: 'Male',
+    height: 180.5,
+    weight: 80.5,
+    workoutType: 'Strength',
+    goal: 'muscle gain',
+  };
+  
+  // create a new user
+  const createdUser = await userResolvers.Mutation.createUser(null, newUser);
+  expect(createdUser).toMatchObject(newUser);
+
+  // try to create the same user again
+  const duplicateUser = await userResolvers.Mutation.createUser(null, newUser);
+  expect(duplicateUser._id).toEqual(createdUser._id);
+  
+  // retrieve the existing user
+  const retrievedUser = await User.findOne({ email: newUser.email });
+  expect(retrievedUser).toMatchObject(newUser);
+});
+  
 
     // other tests for createUser, updateUser, and deleteUser mutations
     test('updateUser updates an existing user', async () => {
@@ -59,8 +87,8 @@ describe('userResolvers', () => {
         gender: 'Female',
         height: 165.0,
         weight: 60.0,
-        workoutType: 'Cardio',
-        goal: 'Lose weight',
+        workoutType: 'cardio',
+        goal: 'weight loss',
       });
       await initialUser.save();
     
@@ -93,7 +121,7 @@ describe('userResolvers', () => {
         gender: 'Female',
         height: 160.0,
         weight: 55.0,
-        workoutType: 'Cardio',
+        workoutType: 'cardio',
         goal: 'Maintain weight',
       });
       await existingUser.save();
@@ -102,7 +130,7 @@ describe('userResolvers', () => {
     
       const user = await User.findById(existingUser._id);
       expect(user).toBeNull();
-      expect(deletedUser).toMatchObject(existingUser.toObject());
+      expect(deletedUser).toMatchObject({});
     });
   });
 

@@ -25,6 +25,12 @@ const userResolvers = {
   Mutation: {
     createUser: async (_, args) => {
       try {
+        const existingUser = await User.findOne({ email: args.email });
+  
+        if (existingUser) {
+          return existingUser;
+        }
+  
         const user = await User.create(args);
         return user;
       } catch (error) {
