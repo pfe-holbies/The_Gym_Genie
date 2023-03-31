@@ -55,6 +55,18 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Diet',
   }],
+  calorieBurn: [
+    {
+      date: {
+        type: Date,
+        required: true,
+      },
+      calories: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
 });
 
 // Create the user model

@@ -11,7 +11,14 @@ type User {
   supplements: [Supplement!]!
   workouts: [Workout!]!
   diets: [Diet!]!
+  calorieBurn: [CalorieBurn!]!
 }
+
+type CalorieBurn {
+  date: String!
+  calories: Float!
+}
+
 
 type Supplement {
   id: ID!

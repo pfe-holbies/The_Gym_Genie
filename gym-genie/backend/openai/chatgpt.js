@@ -50,6 +50,7 @@ async function handleMessage(user) {
     return response;
   }
 
+  /*
   function runChatbotThread(id) {
     return new Promise((resolve, reject) => {
       const worker = new Worker(__filename, { workerData: id });
@@ -75,6 +76,6 @@ async function handleMessage(user) {
       parentPort.postMessage(response);
     }
   }
-  
+  */
   
   module.exports = runChatbot;
