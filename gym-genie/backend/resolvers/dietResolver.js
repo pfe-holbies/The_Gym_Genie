@@ -1,5 +1,16 @@
 const Diet = require('../models/diet');
-
+// add create multiple diets
+// add create diet with invalid calorieGoal
+// add diet by calorieGoal
+// add diet by name
+// add diet by description
+// add diet by name and description
+// add diet by name and calorieGoal
+// add diet by description and calorieGoal
+// add diet by name, description, and calorieGoal
+// diet by level
+// diet by budget
+// diet by level and budget
 const dietResolver = {
   Query: {
     getDiet: async (_, { id }) => {

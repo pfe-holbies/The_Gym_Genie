@@ -13,6 +13,11 @@ const dietSchema = new mongoose.Schema({
     trim: true,
     maxlength: 500
   },
+  calorieGoal: {
+    type: Number,
+    required: true,
+    min: 1000,
+  },
   /*creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
