@@ -1,12 +1,17 @@
-const User = require('../models/user')
-const Redis = require('ioredis');
-const redis = new Redis();
-const cron = require('node-cron');
-
 const { exec } = require('child_process');
 
 // Start Redis server as a child process
 const redisServer = exec('redis-server');
+
+const User = require('../models/user');
+
+//const Redis = require('redis');
+//const redis = Redis.createClient({}); 
+const Redis = require('ioredis');
+const redis = new Redis();
+const cron = require('node-cron');
+
+
 
 // Log any errors
 redisServer.on('error', (error) => {
@@ -23,7 +28,7 @@ redisServer.on('exit', (code) => {
   console.log('Redis server exited with code ${code}');
 });
 
-async function populateStream() {
+async function populateStream(redisClient) {
   const users = await User.find({ workoutType: 'advanced' });
 
   for (const user of users) {
@@ -31,7 +36,7 @@ async function populateStream() {
       userName: user.name,
       workoutName: 'advanced',
     };
-    await redis.xadd('notificationsStream', '*', 'notification', JSON.stringify(notification));
+    await redisClient.xadd('notificationsStream', '*', 'notification', JSON.stringify(notification));
   }
 }
 
@@ -67,3 +72,8 @@ cron.schedule('0 9 * * *', () => {
   console.log('Sending notifications to subscribers...');
   sendUnifiedMessage();
 });
+
+module.exports = {
+  populateStream,
+  sendNotifications,
+};
