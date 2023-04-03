@@ -13,7 +13,7 @@ dotenv.config();
 openai.apiKey = 'YOUR_API_KEY';
 
 // Define function to query OpenAI API
-async function getResponseFromOpenAI(prompt, user) {
+async function getResponseFromOpenAI(user) {
   // Define the parameters for the API request
   const parameters = {
     prompt: prompt,
@@ -40,7 +40,7 @@ async function handleMessage(user) {
     const response = await getResponseFromOpenAI(prompt, user);
     let workout, diet, supplements = ';'
     workout, diet, supplements = response.split(',');
-    user_args = {workout, diet, supplements}
+    user_args = {workout, diet, supplements};
   
     // Update the user's information based on the response
     await userResolver.Mutation.updateUser(null, { id: user.id, args: user_args });
