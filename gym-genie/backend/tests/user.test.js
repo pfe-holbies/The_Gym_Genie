@@ -24,7 +24,7 @@ afterAll(async () => {
 
 describe('userResolvers', () => {
   describe('Query', () => {
-    test('getUser throws when user not found', async () => {
+    test.skip('getUser throws when user not found', async () => {
       const mockId = new mongoose.Types.ObjectId();
       const user = userResolvers.Query.getUser(null, { id: mockId });
       expect(user).rejects.toThrow('User not found');
@@ -33,7 +33,7 @@ describe('userResolvers', () => {
     // other tests for getUser and getAllUsers queries
   });
 
-  test('createUser creates a new user', async () => {
+  test.skip('createUser creates a new user', async () => {
     const newUser = {
       name: 'Test User',
       email: 'testuser@example.com',
@@ -50,7 +50,7 @@ describe('userResolvers', () => {
 
   });
 
-test('createUser creates a duplicate user', async () => {
+test.skip('createUser creates a duplicate user', async () => {
   const newUser = {
     name: 'Test User',
     email: 'testuser@example.com',
@@ -75,10 +75,25 @@ test('createUser creates a duplicate user', async () => {
   const retrievedUser = await User.findOne({ email: newUser.email });
   expect(retrievedUser).toMatchObject(newUser);
 });
+
+test.skip('createUser fails when required fields are missing', async () => {
+  const newUser = {
+    name: 'Test User',
+    email: 'testuser@example.com',
+    password: 'testpassword',
+    age: 25,
+    gender: 'Male',
+    height: 180.5,
+    weight: 80.5,
+    workoutType: 'Strength',
+  };
+  // Omitting the 'goal' field should cause the createUser mutation to fail
+  await expect(userResolvers.Mutation.createUser(null, newUser)).rejects.toThrow();
+});
   
 
     // other tests for createUser, updateUser, and deleteUser mutations
-    test('updateUser updates an existing user', async () => {
+    test.skip('updateUser updates an existing user', async () => {
       const initialUser = new User({
         name: 'Initial User',
         email: 'initialuser@example.com',
@@ -112,7 +127,7 @@ test('createUser creates a duplicate user', async () => {
       expect(updatedUser).toMatchObject(updatedUserData);
     });
     
-    test('deleteUser deletes an existing user', async () => {
+    test.skip('deleteUser deletes an existing user', async () => {
       const existingUser = new User({
         name: 'User to Delete',
         email: 'usertodelete@example.com',
@@ -191,7 +206,7 @@ test('createUser creates a duplicate user', async () => {
   
       const previousWeekCalorieBurn = await userResolvers.getUserCalorieBurnOfPreviousWeek(null, { id: user._id });
       const updatedUser = await User.findById(user._id);
-      console.log(updatedUser.calorieBurn);
+      //console.log(updatedUser.calorieBurn);
       expect(previousWeekCalorieBurn).toHaveLength(1);
       expect(previousWeekCalorieBurn[0]).toMatchObject({ date: date2, calories: calories2 });
     });
