@@ -132,5 +132,70 @@ test('createUser creates a duplicate user', async () => {
       expect(user).toBeNull();
       expect(deletedUser).toMatchObject({});
     });
+
+    
+  describe('Calorie Burn', () => {
+    test('addCalorieBurn adds a new calorie burn entry', async () => {
+      const newUser = {
+        name: 'Test User',
+        email: 'testuser@example.com',
+        password: 'testpassword',
+        age: 25,
+        gender: 'Male',
+        height: 180.5,
+        weight: 80.5,
+        workoutType: 'Strength',
+        goal: 'muscle gain',
+      };
+      const user = await userResolvers.Mutation.createUser(null, newUser);
+
+      const date = new Date();
+      const calories = 500;
+
+      const updatedCalorieBurn = await userResolvers.addCalorieBurn(null, {
+        id: user._id,
+        date,
+        calories,
+      });
+      const updatedUser = await User.findById(user._id);
+      // console.log(updatedUser.calorieBurn);
+      expect(updatedCalorieBurn).toHaveLength(1);
+      expect(updatedCalorieBurn[0]).toMatchObject({ date, calories });
+      // console.log(updatedCalorieBurn[0]);
+      
+    });
+    test('getUserCalorieBurnOfPreviousWeek retrieves calorie burn of the previous week correctly', async () => {
+      const newUser = {
+        name: 'Test User',
+        email: 'testuser@example.com',
+        password: 'testpassword',
+        age: 25,
+        gender: 'Male',
+        height: 180.5,
+        weight: 80.5,
+        workoutType: 'Strength',
+        goal: 'muscle gain',
+      };
+      const user = await userResolvers.Mutation.createUser(null, newUser);
+  
+      const date1 = new Date();
+      date1.setDate(date1.getDate() - 10); // 10 days ago
+      const calories1 = 500;
+  
+      const date2 = new Date();
+      date2.setDate(date2.getDate() - 6); // 6 days ago
+      const calories2 = 600;
+  
+      await userResolvers.addCalorieBurn(null, { id: user._id, date: date1, calories: calories1 });
+      await userResolvers.addCalorieBurn(null, { id: user._id, date: date2, calories: calories2 });
+  
+      const previousWeekCalorieBurn = await userResolvers.getUserCalorieBurnOfPreviousWeek(null, { id: user._id });
+      const updatedUser = await User.findById(user._id);
+      console.log(updatedUser.calorieBurn);
+      expect(previousWeekCalorieBurn).toHaveLength(1);
+      expect(previousWeekCalorieBurn[0]).toMatchObject({ date: date2, calories: calories2 });
+    });
+    
+    });
   });
 
