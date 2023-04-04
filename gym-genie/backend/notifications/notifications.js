@@ -5,10 +5,17 @@ const redisServer = exec('redis-server');
 
 const User = require('../models/user');
 
+const params = {
+  enableReadyCheck: true,
+  dropBufferSupport: true,
+  enableOfflineQueue: true,
+  connectTimeout: 1000,}; // 1 second
+
 //const Redis = require('redis');
 //const redis = Redis.createClient({}); 
 const Redis = require('ioredis');
-const redis = new Redis();
+const redis = Redis.createClient(params)
+// const redis =  new Redis(params);
 const cron = require('node-cron');
 
 
@@ -45,7 +52,7 @@ async function sendNotifications() {
   const group = 'notificationsGroup';
 
   // Fetch all pending messages from the stream
-  const pendingMessages = await redis.xpending(stream, group);
+  const pendingMessages = await redis.sendCommand(new Command('XPENDING', [stream, group, '-', '+', 100, 'consumer']));
   const pendingMessageCount = pendingMessages[0];
 
   if (pendingMessageCount > 0) {
@@ -67,6 +74,8 @@ async function sendNotifications() {
     }
   }
 }
+
+
 
 cron.schedule('0 9 * * *', () => {
   console.log('Sending notifications to subscribers...');

@@ -105,7 +105,7 @@ describe('subscribers test', () => {
     // Mock console.log to capture the output
     console.log = jest.fn();
 
-    await sendNotifications();
+    sendNotifications();
 
     expect(console.log).toHaveBeenCalledTimes(2);
     expect(console.log).toHaveBeenCalledWith(
