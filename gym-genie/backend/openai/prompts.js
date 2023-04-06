@@ -6,6 +6,6 @@ weight_loss_2 :"I want to lose weight in an explosive  way (half a kilo per week
 weight_gain_2 :"I want to gain weight explosively (half a kilo per week) and i work out ${workout_rate}",
 workout_type: "I want to do ${workout_type} workouts",
 ask_for_supplment: "perscribe supplements if needed",
-answer_format: "i want the answer to be like this: workout: week1 :... week2:...week3:... nutrition: week1:... week2:... week3:..., workout_rate:.., supplements",
+answer_format: "i want the answer to be like this: workout: week1 :... week2:...week3:...,nutrition: week1:... week2:... week3:..., workout_rate:.., supplements",
 }
 module.exports = prompt_map;

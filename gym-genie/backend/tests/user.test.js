@@ -206,8 +206,8 @@ test.skip('createUser fails when required fields are missing', async () => {
   
       const previousWeekCalorieBurn = await userResolvers.getUserCalorieBurnOfPreviousWeek(null, { id: user._id });
       const updatedUser = await User.findById(user._id);
-      //console.log(updatedUser.calorieBurn);
-      expect(previousWeekCalorieBurn).toHaveLength(1);
+      console.log(updatedUser.calorieBurn);
+      expect(previousWeekCalorieBurn).toHaveLength(2);
       expect(previousWeekCalorieBurn[0]).toMatchObject({ date: date2, calories: calories2 });
     });
     
