@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import PreviousWeekCalorieBurn from './PreviousWeekCalorieBurn';
-
+// https://blog.openreplay.com/responsive-dashboard-with-react/
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),

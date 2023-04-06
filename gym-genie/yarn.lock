@@ -10260,6 +10260,11 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
+safe-await@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/safe-await/-/safe-await-2.0.0.tgz#279dc3ca05ba8b60ebb28e8b6623d4d9483dc950"
+  integrity sha512-Q/ljA/Y8e4FTvN2r5DIjdmapDkg5Wd3CKP20kF+IABrHEbI9y7bOpHewejS3PY9em/MLac3Rt96zod8jriBZ5g==
+
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
