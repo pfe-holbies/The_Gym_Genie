@@ -1,18 +1,30 @@
 {
-  "name": "pfe",
+  "name": "the_gym_genie",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "description": "Prompt engineering MERN App",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfe-holbies/The_Gym_Genie.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pfe-holbies/The_Gym_Genie/issues"
+  },
+  "homepage": "https://github.com/pfe-holbies/The_Gym_Genie#readme",
   "dependencies": {
-    "graphql-import": "^1.0.2",
-    "winston": "^3.8.2",
-    "apollo-server": "^3.12.0",
-    "apollo-server-testing": "^2.25.3",
-    "axios": "^1.3.4",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
+    "colors": "^1.4.0",
     "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
     "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22"
   }
 }
