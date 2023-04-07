@@ -1,30 +1,14 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-require('dotenv').config()
+const express = require('express');
+const colors = require('colors');
+require('dotenv').config();
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./schema/schema');
+const connectDB = require('./config/db');
+const port = process.env.PORT || 5000;
 
-const app = express()
-const port = process.env.PORT || 3000
-//JWT key
-//const secretKey = process.env.SECRET_KEY
+const app = express();
 
-// connection to MongoDB
-const uri = process.env.MONGODB_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log("MongoDB database connection established successfully");
-});
+// Connect to database
+connectDB();
 
-
-app.use(cors())
-app.use(bodyParser.json())
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`)
-})
+app.use(cors());
