@@ -17,11 +17,14 @@
   },
   "homepage": "https://github.com/pfe-holbies/The_Gym_Genie#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "colors": "^1.4.0",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "graphql": "^15.8.0",
-    "mongoose": "^7.0.3"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "openai": "^3.2.1"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",

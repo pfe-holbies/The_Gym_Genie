@@ -9,15 +9,3 @@ build/
 dist/
 *.log
 
-# Flutter build files
-ios/Pods/
-ios/Flutter/
-android/.gradle/
-android/app/build/
-android/build/
-android/gradle/
-.buildlog
-.packages
-.packages.lock
-pubspec.lock
-/build/
