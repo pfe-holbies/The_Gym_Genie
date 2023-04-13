@@ -8,8 +8,8 @@ const {
   GraphQLScalarType,
 } = require("graphql");
 
-const { RootQuery } = require("../resolvers/rootQuery");
-const { Mutation } = require("../resolvers/mutation");
+const { RootQuery } = require("../controllers/rootQuery");
+const { Mutation } = require("../controllers/mutation");
 const { UserType } = require("../schemas/TypeDefs/UserType");
 
 // Define the schema
