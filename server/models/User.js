@@ -17,15 +17,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 5,
   },
-  createdat: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedat: {
-    type: Date,
-    default: Date.now,
-  },
-  age: {
+  /* age: {
     type: Number,
     required: true,
   },
@@ -76,7 +68,7 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Diet",
     },
-  ],
+  ], */
 });
 
 // Time and Date stamp
