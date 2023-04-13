@@ -1,11 +1,9 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const connectDB = require('./config/db');
-const schema = require('./GraphQl/schemas/schemas');
+const schema = require('./GraphQl/schemas/schema');
 require('dotenv').config();
-//console.log(process.env.SECRET_KEY)
-//console.log(process.env.MONGO_URI)
-//console.log(process.env.PORT)
+
 
 const app = express();
 
