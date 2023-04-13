@@ -1,4 +1,3 @@
-// Import mongoose to create a schema
 const mongoose = require('mongoose');
 
 // Define the user schema
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other', 'Prefer not to say', 'non-binary', 'Attack Helicopter'],
+    enum: ['Male', 'Female', 'Other', 'Prefer not to say', 'non-binary'],
     required: true,
   },
   height: {
@@ -35,12 +34,12 @@ const userSchema = new mongoose.Schema({
   },
   workoutType: {
     type: String,
-    enum: ['beginner', 'intermediate', 'advanced', 'cardio', 'Strength'],
+    enum: ['beginner', 'intermediate', 'advanced', 'cardio', 'strength'],
     required: true,
   },
   goal: {
     type: String,
-    enum: ['weight loss', 'muscle gain', 'general fitness', 'lose fat', 'lose weight', 'strength', 'Cardio', 'cardio', 'Maintain weight', 'Strength'],
+    enum: ['Be more active','Weight loss', 'Muscle gain', 'General fitness', 'Maintain weight', 'Manage stress'],
     required: true,
   },
   supplements: [{
