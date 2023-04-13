@@ -2,7 +2,7 @@ import { OpenAI } from "langchain/llms/openai";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { HNSWLib } from "langchain/vectorstores/hnswlib"; // best performance i believe
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-
+import * as fs from "fs";
 
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
 import {
@@ -11,6 +11,8 @@ import {
 } from "langchain/document_loaders/fs/json";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { CSVLoader } from "langchain/document_loaders/fs/csv";
+
+require('dotenv').config();
 
 
 /*const chat = new ChatOpenAI({ temperature: 0,  maxConcurrency: 5 , openAIApiKey: "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", m}); //process.env.OPENAI_API_KEY
@@ -21,8 +23,15 @@ response = await chat.call([
     ),
     new HumanChatMessage("Translate: I love programming."),
   ]);*/
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("No OpenAI API key found in environment variable OPENAI_API_KEY");
+  }
+
+  const knwoledgeBasepath = './src/document_loaders/example_data/example';
+
+  if(process.env.FILE_COUNT != fs.readdirSync(directoryPath).length) {
   const loader = new DirectoryLoader(
-    "src/document_loaders/example_data/example",
+    knwoledgeBasepath,
     {
       ".json": (path) => new JSONLoader(path, "/texts"),
       ".jsonl": (path) => new JSONLinesLoader(path, "/html"),
@@ -30,6 +39,8 @@ response = await chat.call([
       ".csv": (path) => new CSVLoader(path, "text"),
     }
   );
+  }
+
   const docs = await loader.load();
   const vector_store_path = "./vector_store.hnswlib";
   
@@ -38,10 +49,14 @@ response = await chat.call([
     const model = new OpenAI({ temperature: 0,  maxConcurrency: 5 , openAIApiKey: process.env.OPENAI_API_KEY, maxTokens: 2000});;
     /* Load in the files we want to do question answering over */
     docs = await loader.load();
-    /* Initialize the vector store */
+    /* Initialize the vector store if it doesn't exists*/
+    if(fs.existsSync(vector_store_path)) {
+      vectorStore = await HNSWLib.load(vector_store_path);
+    } else {
     const vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings());
-    /* Save the vector store */
     vectorStore = await vectorStore.save(vector_store_path);
+    }
+    /* Save the vector store */
     const chain = new ConversationalRetrievalQAChain(model, vectorStore.asRetriever());
     //RetrievalQAChain
     // multiple questions o chatgpt ????
