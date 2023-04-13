@@ -1,18 +1,16 @@
-const mongoose = require('mongoose');
-//const { encryptPassword } = require('../utils/bcrypt');
+const mongoose = require("mongoose");
 
-
+// Define the user schema
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    unique: true,
     required: true,
   },
   email: {
     type: String,
-    unique: true,
     required: true,
-    match: [/.+@.+\..+/, 'Please enter a valid e-mail address'],
+    unique: true,
+    match: [/.+@.+\..+/, "Please enter a valid e-mail address"],
   },
   password: {
     type: String,
@@ -27,22 +25,64 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  age: {
+    type: Number,
+    required: true,
+  },
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other", "Prefer not to say", "non-binary"],
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
+  },
+  weight: {
+    type: Number,
+    required: true,
+  },
+  workoutType: {
+    type: String,
+    enum: ["beginner", "intermediate", "advanced", "cardio", "strength"],
+    required: true,
+  },
+  goal: {
+    type: String,
+    enum: [
+      "Be more active",
+      "Weight loss",
+      "Muscle gain",
+      "General fitness",
+      "Maintain weight",
+      "Manage stress",
+    ],
+    required: true,
+  },
+  supplements: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Supplement",
+    },
+  ],
+  workouts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Workout",
+    },
+  ],
+  diets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Diet",
+    },
+  ],
 });
 
 // Time and Date stamp
-UserSchema.pre('save', function (next) {
+UserSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-// hash user password
-/* UserSchema.pre('save', async function (next) {
-    if (this.isNew ||!this.isModified('password')) {
-        return next();
-    }
-
-    this.password = await encryptPassword(this.password);
-    next();
-}); */
-
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
