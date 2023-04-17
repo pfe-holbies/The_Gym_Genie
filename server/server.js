@@ -3,7 +3,7 @@ const colors = require("colors");
 require("dotenv").config();
 
 // Start the server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 app.listen(
   port,
   () => console.log(`🚀 Server is up and running `.magenta.bold),
