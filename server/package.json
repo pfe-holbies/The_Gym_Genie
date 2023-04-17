@@ -1,17 +1,38 @@
 {
-  "name": "tgg_mern_app",
-  "version": "1.0.0",
-  "main": "server.js",
-  "license": "MIT",
-  "dependencies": {
-    "colors": "^1.4.0",
-    "express": "^4.18.2",
-    "express-graphql": "^0.12.0",
-    "graphql": "^15.8.0",
-    "mongoose": "^7.0.3"
-  },
-  "devDependencies": {
-    "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
+    "name": "the_gym_genie",
+    "version": "1.0.0",
+    "description": "ChatGPT Prompt engineering MERN + GraphQL API Web App",
+    "main": "server.js",
+    "scripts": {
+      "dev": "nodemon server.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/pfe-holbies/The_Gym_Genie.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/pfe-holbies/The_Gym_Genie/issues"
+    },
+    "homepage": "https://github.com/pfe-holbies/The_Gym_Genie#readme",
+    "dependencies": {
+      "bcrypt": "^5.1.0",
+      "bcryptjs": "^2.4.3",
+      "colors": "^1.4.0",
+      "express": "^4.18.2",
+      "express-graphql": "^0.12.0",
+      "graphiql": "^2.4.1",
+      "graphql": "^15.8.0",
+      "graphql-merge": "^0.0.1",
+      "graphql-tools": "^8.3.19",
+      "jsonwebtoken": "^9.0.0",
+      "mongoose": "^7.0.3",
+      "openai": "^3.2.1"
+    },
+    "devDependencies": {
+      "dotenv": "^16.0.3",
+      "nodemon": "^2.0.22",
+      "prettier": "^2.8.7"
+    }
   }
-}

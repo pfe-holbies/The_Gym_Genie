@@ -1,14 +1,15 @@
-const express = require('express');
-const colors = require('colors');
-require('dotenv').config();
-const { graphqlHTTP } = require('express-graphql');
-const schema = require('./schema/schema');
-const connectDB = require('./config/db');
+const app = require("./app");
+const colors = require("colors");
+require("dotenv").config();
+
+// Start the server
 const port = process.env.PORT || 5000;
-
-const app = express();
-
-// Connect to database
-connectDB();
-
-app.use(cors());
+app.listen(
+  port,
+  () => console.log(`🚀 Server is up and running `.magenta.bold),
+  console.log(`📭 Hit http://localhost:${port}/graphql to see the GraphiQL tool`.yellow.bold)
+);
+/* app.listen(port, () =>
+  console.log(`🚀 Server is up and running `.magenta.bold),
+  console.log(`📭 Hit http://localhost:${port}/graphql to see the GraphiQL tool`.magenta.bold)
+); */
