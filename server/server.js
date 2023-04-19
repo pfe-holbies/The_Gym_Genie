@@ -17,9 +17,9 @@ app.listen(port, () =>
 );
 
 // Prompt the user for input
-const startPrompt = async (answers) => {
+/* onst startPrompt = async (answers) => {
   if (!answers) {
-    answers = await askQuestion();
+    answers = await askQuestion(); 
   }
   console.log(colors.yellow("User Input: "), answers);
 
@@ -36,7 +36,7 @@ const startPrompt = async (answers) => {
   } catch (err) {
     console.error(colors.red("Failed to save user to database"), err);
   }
-};
+}; */
 
 startPrompt();
 /* startPrompt({
