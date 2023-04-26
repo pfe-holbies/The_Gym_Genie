@@ -1,26 +1,35 @@
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
-import connectDB from "./config/db.js";
-import graphQLResolvers from "./graphql/resolvers/index.js";
-import dotenv from "dotenv";
-dotenv.config();
-import typeDefs from "./graphql/schema/typeDefs.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const { graphqlHTTP } = require("express-graphql");
+const schema = require("./graphql/schema");
+const { connectDB } = require("./config/db");
+const { is_authenticated } = require("./middleware/is_authenticated");
 
+// Initilize Express App
 const app = express();
+
+// Load environment variables
+dotenv.config();
 
 // connection to MongoDB
 connectDB();
 
-app.use(express.json());
+// Authentication middleware
+app.use(is_authenticated);
 
-// Add a route for your /graphql endpoint
+// Routes
+app.get("/", (req, res) => {
+  res.json({ msg: "Welcome! Go to /graphql" });
+});
+
+// GraphQL API
 app.use(
   "/graphql",
   graphqlHTTP({
-    schema: typeDefs,
-    rootValue: graphQLResolvers,
+    schema,
+    // only for development -- GUI
     graphiql: true,
   })
 );
 
-export default app;
+module.exports = app;
