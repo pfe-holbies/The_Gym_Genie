@@ -4,7 +4,9 @@
   "description": "This is a server side of the web app the Gym Genie a prompt engineering project. Using MERN and graphql API and openai API",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint . --fix",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,7 @@
     "openai": "^3.2.1"
   },
   "devDependencies": {
+    "eslint": "^8.39.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8"
   }
