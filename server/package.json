@@ -1,30 +1,31 @@
 {
-  "name": "the_gym_genie",
+  "name": "server_side_tgg",
   "version": "1.0.0",
-  "description": "Prompt engineering MERN App",
+  "description": "This is a server side of the web app the Gym Genie a prompt engineering project. Using MERN and graphql API and openai API",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint . --fix",
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pfe-holbies/The_Gym_Genie.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pfe-holbies/The_Gym_Genie/issues"
-  },
-  "homepage": "https://github.com/pfe-holbies/The_Gym_Genie#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "graphql": "^15.8.0",
-    "mongoose": "^7.0.3"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.4",
+    "node-fetch": "^3.3.1",
+    "openai": "^3.2.1"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
+    "eslint": "^8.39.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
   }
 }

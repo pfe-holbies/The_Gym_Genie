@@ -1,18 +1,18 @@
-const express = require('express')
-const { graphqlHTTP } = require('express-graphql');
-const connectDB = require('./config/db')
-const colors = require('colors');
-require('dotenv').config()
-const port = process.env.PORT || 4000;
+/* global process */
+const app = require("./app");
+const colors = require("colors"); // eslint-disable-line no-unused-vars
+const dotenv = require("dotenv");
 
-const app = express()
+// Load environment variables
+dotenv.config();
 
-// connection to MongoDB
-connectDB();
+// Start the server
+const port = process.env.PORT || 5000;
 
-// connection to GraphQl API
-app.use('/graphql', graphqlHTTP({
-  graphiql: true,
-})); 
-
-app.listen(port, console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`));
+// Start the server
+app.listen(port, () =>
+  console.log(
+    `🚀 Server is up and running
+🎉 To see GraphiQL: Hit ${`http://localhost:${port}/graphql`.blue}`.magenta.bold
+  )
+);
