@@ -13,12 +13,9 @@ npm install
 npm start
 ```
 
-
-[Click here for Mouna's LinkedIn](https://www.linkedin.com/in/mouna-ben-ali-643bb865/)
-
-[Click here for Mouna's Twitter](https://twitter.com/MunaBenAli)
 ## Authors (LinkedIn & Github) :black_nib:
 Mouna Ben Ali
+
 Saif Elleuch
 
  ## Acknowledgments
