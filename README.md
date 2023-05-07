@@ -1,32 +1,9 @@
 # GymGenie MERN GraphQL WEB APP 
  
  
-![Car Detector](assets/GymGenie.png)
+![Gym Genie](assets/GymGenie.png)
  
 
- 
-- [The Story](#the-story)
-- [Deployed Site](#deployed-site)
-- [Blogs](#blogs)
-- [Presentation](#presentation)
-- [Architecture](#architecture)
-- [Flowchart](#flowchart)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Screenshots](#screenshots)
-- [Features](#features)
-    - [Upload images to API Detect car and return its model, brand, year and color](#features)
-    - [GET saved predictions from API via database](#features)
-    - [Discord Bot to predict](#features)
-- [Built With](#built-with)
-- [API](#api)
-- [Future](#future)
-- [Authors](#authors)
-    - [Dhia Ben Dahmani](#dhia-bendahmani)
-    - [Rayen Hedri](#rayen-hedri)
-    - [Montassar Barbouchi](#montassar-barbouchi)
-    - [Mouna Ben Ali](#mouna-benali)
-- [Acknowledgments](#acknowledgements)
  
 
 ## Installation
