@@ -13,20 +13,30 @@ export default function OpenAI() {
       <div className="header-img" id="header">
         <div className="home-banner-container">
           <div className="home-text-section">
-            <h2 className="home-text-section mt-5 ms-5 home-text-highlight">ABRACADABRA</h2>
+            <h2 className="home-text-section mt-5 ms-5 home-text-highlight">
+              ABRACADABRA
+            </h2>
             <p className="home-text">
-              Oh great and powerful master, welcome!
-              I am <span className="home-text-highlight">GymGenie</span> of the Lamp, at your service!
+              Oh great and powerful master, welcome! I am{' '}
+              <span className="home-text-highlight">GymGenie</span> of the Lamp,
+              at your service!
               <br />
               Just tell me what you desire, and I shall make it come true.
-              Whether it be six-pack abs, attractive body or big muscles, I can make it happen!
-              So press the buttons and receive your wishes, and let's make AI magic together!
+              Whether it be six-pack abs, attractive body or big muscles, I can
+              make it happen! So press the buttons and receive your wishes, and
+              let's make AI magic together!
             </p>
             <hr className="hr-style" />
-            <Button  className="btn-learn" onClick={() => setShowWorkoutsModal(true)}>
+            <Button
+              className="btn-learn"
+              onClick={() => setShowWorkoutsModal(true)}
+            >
               Workouts
             </Button>
-            <Button className="btn-learn" onClick={() => setShowMealsModal(true)}>
+            <Button
+              className="btn-learn"
+              onClick={() => setShowMealsModal(true)}
+            >
               Meals
             </Button>
           </div>

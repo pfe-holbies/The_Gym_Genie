@@ -5,5 +5,5 @@ export default function Footer() {
         <p className="lead">Copyright &copy; 2023 GymGenie</p>
       </div>
     </footer>
-  )
+  );
 }

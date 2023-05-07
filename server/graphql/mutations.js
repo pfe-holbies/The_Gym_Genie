@@ -1,14 +1,13 @@
-const { User } = require("../models/User");
-const { GraphQLString, GraphQLInt } = require("graphql");
-const bcrypt = require("bcryptjs");
-const { createJwtToken } = require("../utils/auth");
-const { fetchOpenAICompletion } = require("../utils/openAIapi");
-
+const { User } = require('../models/User');
+const { GraphQLString, GraphQLInt } = require('graphql');
+const bcrypt = require('bcryptjs');
+const { createJwtToken } = require('../utils/auth');
+const { fetchOpenAICompletion } = require('../utils/openAIapi');
 
 // register new user mutation
 const registerMutation = {
   type: GraphQLString,
-  description: "Register new user",
+  description: 'Register new user',
   args: {
     username: { type: GraphQLString },
     email: { type: GraphQLString },
@@ -44,21 +43,21 @@ const registerMutation = {
       foodAllergies,
     } = args;
 
-   // Check if email contains capital letter
-		if (/[A-Z]/.test(email)) {
-			throw new Error('Email should not contain capital letters');
-		}
+    // Check if email contains capital letter
+    if (/[A-Z]/.test(email)) {
+      throw new Error('Email should not contain capital letters');
+    }
 
-		// check if password is empty
-		if (!password) {
-			throw new Error('Password cannot be empty');
-		}
+    // check if password is empty
+    if (!password) {
+      throw new Error('Password cannot be empty');
+    }
 
-		// check if the user already exists
-		const userExists = await User.findOne({ email });
-		if (userExists) {
-			throw new Error('User already exists');
-		}
+    // check if the user already exists
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      throw new Error('User already exists');
+    }
 
     // hash the password
     const salt = await bcrypt.genSalt(10);
@@ -89,20 +88,19 @@ const registerMutation = {
     // generate jwt token
     const token = createJwtToken(user);
 
-   // update the user with the token and save it into the DB
-		user.token = token;
-		savedUser = await user.save();
+    // update the user with the token and save it into the DB
+    user.token = token;
+    savedUser = await user.save();
 
-		
-		// return the token
-		return savedUser;
+    // return the token
+    return savedUser;
   },
 };
 
 // login mutation
 const loginMutation = {
   type: GraphQLString,
-  description: "Login user",
+  description: 'Login user',
   args: {
     email: { type: GraphQLString },
     password: { type: GraphQLString },
@@ -110,11 +108,11 @@ const loginMutation = {
   // resolver function
   async resolve(parent, args) {
     // Check if the user already exists
-    const user = await User.findOne({ email: args.email }).select("+password");
+    const user = await User.findOne({ email: args.email }).select('+password');
 
     // If the user does not exist or the password is wrong throw an error
     if (!user || !bcrypt.compare(args.password, user.password)) {
-      throw new Error("Invalid credentials");
+      throw new Error('Invalid credentials');
     }
 
     // generate jwt token
@@ -129,7 +127,7 @@ const loginMutation = {
 // fetch workout plan from openai api mutation
 const fetchWorkoutMutation = {
   type: GraphQLString,
-  description: "fetch workout plan from openai api mutation",
+  description: 'fetch workout plan from openai api mutation',
   args: {},
   // resolver function
   async resolve(parent, args, { verifiedUser }) {
@@ -149,7 +147,7 @@ const fetchWorkoutMutation = {
 
     // if user does not exist
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw new Error('Invalid credentials');
     }
 
     // destructure user data from database
@@ -180,7 +178,7 @@ const fetchWorkoutMutation = {
     Start your response always With: ABRACADABRA! Master ${username} Let me be your Gym Genie and grant you the perfect workout plan to reach your goal ${primaryGoal}.`;
 
     // OpenAI API endpoint argument
-    const apiEndpoint = "https://api.openai.com/v1/completions";
+    const apiEndpoint = 'https://api.openai.com/v1/completions';
 
     // Call to OpenAI API
     const workoutPlan = await fetchOpenAICompletion(prompt, apiEndpoint);
@@ -196,7 +194,7 @@ const fetchWorkoutMutation = {
 // fetch meal plan from openai api mutation
 const fetchMealMutation = {
   type: GraphQLString,
-  description: "fetch meal plan from openai api mutation",
+  description: 'fetch meal plan from openai api mutation',
   args: {},
   // resolver function
   async resolve(parent, args, { verifiedUser }) {
@@ -212,7 +210,7 @@ const fetchMealMutation = {
 
     // if user does not exist
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw new Error('Invalid credentials');
     }
 
     // destructure user data from database
@@ -233,7 +231,7 @@ const fetchMealMutation = {
     Start your response always With: ABRACADABRA! Master ${username} Let me be your Gym Genie and grant you the perfect meal plan to reach your nutrition goals.`;
 
     // OpenAI API endpoint argument
-    const apiEndpoint = "https://api.openai.com/v1/completions";
+    const apiEndpoint = 'https://api.openai.com/v1/completions';
 
     // Call to OpenAI API
     const mealPlan = await fetchOpenAICompletion(prompt, apiEndpoint);

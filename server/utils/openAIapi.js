@@ -1,21 +1,21 @@
 /* global process */
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 dotenv.config();
 const openAIKey = process.env.OPENAI_API_KEY;
 const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 // Call to OpenAI API for completion request takes args prompt and apiEndpoint and returns data
 async function fetchOpenAICompletion(prompt, apiEndpoint) {
   // OpenAI API POST request model: "text-davinci-003"
   const response = await fetch(apiEndpoint, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${openAIKey}`,
     },
     body: JSON.stringify({
-      model: "text-davinci-003",
+      model: 'text-davinci-003',
       prompt,
       max_tokens: 1024,
       temperature: 0,

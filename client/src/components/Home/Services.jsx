@@ -1,7 +1,7 @@
-import Workout from '../../assets/workout.png'
-import Meal from '../../assets/meal.png'
-import Tracker from '../../assets/tracker.png'
-import { Container, Row, Col } from 'react-bootstrap'
+import Workout from '../../assets/workout.png';
+import Meal from '../../assets/meal.png';
+import Tracker from '../../assets/tracker.png';
+import { Container, Row, Col } from 'react-bootstrap';
 
 export default function Services() {
   return (
@@ -32,5 +32,5 @@ export default function Services() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }

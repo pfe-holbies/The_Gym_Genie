@@ -1,7 +1,12 @@
-const { GraphQLSchema, GraphQLObjectType } = require("graphql");
+const { GraphQLSchema, GraphQLObjectType } = require('graphql');
 
 // Import queries
-const { getUser, getUsers, userWorkoutPlan, userMealPlan } = require("./queries");
+const {
+  getUser,
+  getUsers,
+  userWorkoutPlan,
+  userMealPlan,
+} = require('./queries');
 
 // Import mutations
 const {
@@ -9,19 +14,19 @@ const {
   loginMutation,
   fetchWorkoutMutation,
   fetchMealMutation,
-} = require("./mutations");
+} = require('./mutations');
 
 // Define QueryType
 const QueryType = new GraphQLObjectType({
-  name: "QueryType",
-  description: "Queries",
+  name: 'QueryType',
+  description: 'Queries',
   fields: { getUser, getUsers, userWorkoutPlan, userMealPlan },
 });
 
 // Define MutationType
 const MutationType = new GraphQLObjectType({
-  name: "MutationType",
-  description: "Mutations",
+  name: 'MutationType',
+  description: 'Mutations',
   fields: {
     registerMutation,
     loginMutation,

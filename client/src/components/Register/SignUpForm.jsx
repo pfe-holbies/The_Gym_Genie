@@ -1,11 +1,10 @@
-import { Form, Row, Col, Button, } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { REGISTER_USER } from '../../GraphQL/userMutations';
 import { cloneDeep } from '@apollo/client/utilities';
-
 
 export default function SignUpForm() {
   const [username, setUsername] = useState('');
@@ -22,8 +21,6 @@ export default function SignUpForm() {
   const [workoutsPerWeek, setWorkoutNum] = useState('');
   const [dietType, setDiet] = useState('');
   const [foodAllergies, setAllergies] = useState('');
-
- 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -130,7 +127,6 @@ export default function SignUpForm() {
                   placeholder="Enter your password..."
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                
               </Form.Group>
             </Col>
           </Row>
@@ -312,12 +308,12 @@ export default function SignUpForm() {
             </Col>
           </Row>
           <hr className="form-divider" />
-              <p className='push-item'>
-                Already have an account?{' '}
-                <Link to="/login" className="login-here">
-                  Log in here
-                </Link>
-              </p>
+          <p className="push-item">
+            Already have an account?{' '}
+            <Link to="/login" className="login-here">
+              Log in here
+            </Link>
+          </p>
           <hr className="form-divider" />
           <Button className="submit-btn" type="submit">
             Submit

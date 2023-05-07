@@ -1,4 +1,4 @@
-import Navhome from './Navhome'
+import Navhome from './Navhome';
 
 export default function Header() {
   return (
@@ -28,5 +28,5 @@ export default function Header() {
         </div>
       </div>
     </>
-  )
+  );
 }

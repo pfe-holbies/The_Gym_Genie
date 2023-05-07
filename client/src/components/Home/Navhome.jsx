@@ -1,6 +1,6 @@
-import { Container, Navbar, Nav } from 'react-bootstrap'
-import logo from '../../assets/logo.png'
-import { Link } from 'react-router-dom'
+import { Container, Navbar, Nav } from 'react-bootstrap';
+import logo from '../../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 export default function Navhome({ hideLinks }) {
   return (
@@ -37,5 +37,5 @@ export default function Navhome({ hideLinks }) {
         )}
       </Container>
     </Navbar>
-  )
+  );
 }

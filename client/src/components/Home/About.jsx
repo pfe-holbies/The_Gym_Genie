@@ -1,6 +1,6 @@
-import { Row, Col, Container } from 'react-bootstrap'
-import GymGenie from '../../assets/GymGenie.png'
-import {Link } from 'react-router-dom'
+import { Row, Col, Container } from 'react-bootstrap';
+import GymGenie from '../../assets/GymGenie.png';
+import { Link } from 'react-router-dom';
 
 export default function About() {
   return (
@@ -34,9 +34,12 @@ export default function About() {
                   hello to efficient, effective fitness with GymGenie. Join us
                   now.
                 </p>
-                <Link to='/register' className='btn btn-learn btn-signup btn-hover'>
+                <Link
+                  to="/register"
+                  className="btn btn-learn btn-signup btn-hover"
+                >
                   Learn More
-          </Link>
+                </Link>
               </Col>
               <Col>
                 <img src={GymGenie} className="about-img mt-0" />
@@ -46,5 +49,5 @@ export default function About() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }

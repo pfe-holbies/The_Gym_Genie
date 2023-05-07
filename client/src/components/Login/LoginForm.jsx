@@ -1,18 +1,44 @@
-import React, { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { LOG_USER } from '../../GraphQL/userMutations';
+import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
-  const [loginData, setloginData] = useState({
-    email: '',
-    password: '',
-  })
-  const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
+  const [loginMutation] = useMutation(LOG_USER, {
+    onCompleted({ login }) {
+      // Store the token in the local storage
+      localStorage.setItem('token', login);
+      console.log(`User with email: ${email} is logged in`);
+      alert(`${email} is logged in!`);
+      navigate('/dashboard');
+    },
+    onError(error) {
+      console.log(error.message);
+      alert('Invalid credentials');
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      email,
+      password,
+    };
+
+    loginMutation({ variables: userData });
+    setEmail('');
+    setPassword('');
+  };
 
   return (
     <div className="form login-form">
@@ -21,16 +47,14 @@ export default function LoginForm() {
           <h2 className="mb-3">Member Login</h2>
         </div>
         <div className="body">
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-2 ">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
-                value={loginData.email}
-                onChange={(event) =>
-                  setloginData({ ...loginData, email: event.target.value })
-                }
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="form-control-sm"
                 style={{ width: '115%' }}
               />
@@ -42,10 +66,8 @@ export default function LoginForm() {
                 <Form.Control
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
-                  value={loginData.password}
-                  onChange={(event) =>
-                    setloginData({ ...loginData, password: event.target.value })
-                  }
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <span
                   className="password-icon"
@@ -70,5 +92,5 @@ export default function LoginForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }

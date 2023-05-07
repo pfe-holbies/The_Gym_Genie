@@ -1,7 +1,7 @@
 /* global process */
-const GraphQLServer = require("./app");
-const colors = require("colors"); // eslint-disable-line no-unused-vars
-const dotenv = require("dotenv");
+const GraphQLServer = require('./app');
+const colors = require('colors'); // eslint-disable-line no-unused-vars
+const dotenv = require('dotenv');
 
 // Load environment variables
 dotenv.config();

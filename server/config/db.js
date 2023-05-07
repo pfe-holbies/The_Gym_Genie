@@ -1,7 +1,7 @@
 /* global process */
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-mongoose.set("strictQuery", false);
+mongoose.set('strictQuery', false);
 
 // Async Connection to MongoDB Database
 const connectDB = async () => {

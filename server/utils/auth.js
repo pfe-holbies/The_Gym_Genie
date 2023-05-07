@@ -1,5 +1,5 @@
 /* global process */
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 // creates jwt token
 const createJwtToken = (user) => {
