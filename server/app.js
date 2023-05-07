@@ -32,7 +32,7 @@ GraphQLServer.use(
   graphqlHTTP({
     schema,
     // only for development -- GUI
-    graphiql: true,
+		graphiql: process.env.NODE_ENV === 'development',
   })
 );
 

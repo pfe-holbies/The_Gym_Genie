@@ -1,0 +1,249 @@
+/*** HOMEPAGE ***/
+/* Header
+  ============================= */
+/* Homepage NavBar Component */
+
+.home-banner-container {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.brand {
+    display: flex;
+    position: absolute;
+}
+
+.navbar {
+    background: var(--primary-clr) !important;
+    font-family: var(--font-family-title);
+    width: 100%;
+    height: 50px;
+    display: flex;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.nav-items {
+    color: var(--call-to-action) !important;
+    text-decoration: none;
+    height: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-items:hover {
+    color: var(--color-white) !important;
+}
+
+.nav-items:focus {
+    box-shadow: var(--color-white) !important;
+    color: var(--color-white) !important;
+}
+
+.nav-items:active {
+    color: var(--clr-red) !important;
+}
+
+.btn-signup {
+    background-color: var(--call-to-action) !important;
+    color: var(--primary-clr) !important;
+}
+
+.btn:hover {
+    color: var(--color-white) !important;
+    font-weight: bold;
+}
+
+.btn:focus {
+    box-shadow: none !important;
+    color: var(--) !important;
+}
+
+.btn:active {
+    color: var(--clr-red) !important;
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    padding: .25rem;
+}
+
+.btn-warning:hover {
+    border-color: var(--primary-clr) !important;
+}
+
+
+.align-end {
+    margin-right: 0rem;
+    margin-left: 25rem;
+    gap: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* End NavBar Component */
+/* Homepage Header Component*/
+
+
+.header-img {
+    background-image: url('../assets/home-banner-background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.hr-style {
+    border: 3px solid;
+    width: 65%;
+    margin: 3rem 3rem 1rem 4rem;
+    color: var(--color-white);
+}
+
+.home-text-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--color-white);
+    max-width: 500px;
+    margin: -4rem 0 0 4rem !important;
+}
+
+.home-text {
+    font-size: clamp(1.5rem, 3vw, 1.5rem);
+    max-width: 500px;
+    color: var(--color-white);
+    margin: 1.5rem 0 0 4rem;
+}
+
+.home-text-highlight {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: var(--call-to-action);
+    font-weight: var(--fw-bold);
+    ;
+}
+
+
+
+
+.home-image-section {
+    max-width: 600px;
+    flex: 1;
+}
+
+/* End Homepage Header Component */
+/* End Header Section
+  ============================= */
+
+/* About Section
+  ============================= */
+
+.container1 {
+    background-color: var(--primary-clr) !important;
+    height: 50px;
+}
+
+.container2 {
+    height: '600px';
+    display: 'flex';
+    align-items: center;
+    justify-content: center;
+}
+
+.about-container {
+    padding: 0%;
+    margin-bottom: -25%;
+}
+
+.about-img {
+    height: 60%;
+    width: 60%;
+    margin-left: 25%;
+    margin-bottom: 50%;
+    border-radius: 85%;
+    border: 5px solid var(--call-to-action);
+}
+
+.about-title {
+    font-size: clamp(0rem, 5vw, 4rem);
+    font-size: var(--font-size-large) !important;
+    color: var(--primary-clr);
+    max-width: 800px;
+}
+
+.about-text {
+    font-size: clamp(0rem, 5vw, 1rem) !important;
+    color: var(--primary-clr);
+    margin-top: 1rem;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.btn-learn {
+    margin: 1rem 0 0 38%;
+    color: var(--color-white) !important;
+    background-color: var(--clr-red) !important;
+}
+
+
+/* End About Section
+  ============================= */
+/* Services Section
+  ============================= */
+.services-container {
+    background-color: var(--primary-clr) !important;
+    padding: 2rem;
+}
+
+.services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 5%;
+}
+
+.services-title {
+    font-size: clamp(0rem, 5vw, 4rem);
+    color: var(--color-white);
+    display: flex;
+    justify-content: center;
+}
+
+.services-content {
+    display: flex;
+    justify-content: center;
+}
+
+.service-image {
+    max-width: 100%;
+    height: 50%;
+}
+
+.service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: -10%;
+}
+
+.service-text {
+    font-size: var(--font-size-medium);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+
+/* Footer
+  ============================= */

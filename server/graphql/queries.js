@@ -1,52 +1,51 @@
-const { GraphQLList, GraphQLID } = require("graphql");
-const { UserType } = require("./typeDefs");
-const { User } = require("../models/User.js");
+const { GraphQLList, GraphQLID } = require('graphql');
+const { UserType } = require('./typeDefs');
+const { User } = require('../models/User.js');
 
-// Retrieves all users
-const users = {
-  type: new GraphQLList(UserType),
-  description: "Retrieves list of users",
-  // resolver function
-  resolve(parent, args) {
-    // eslint-disable-line no-unused-vars
-    return User.find();
-  },
+// Profile page tested
+const getUser = {
+	type: UserType,
+	description: 'Retrieves one user',
+	args: { id: { type: GraphQLID } },
+
+	resolve(parent, args) {
+		console.log('Fetching user with id:', args.id);
+		return User.findById(args.id);
+	},
 };
 
-// Retrieves one user query
-const user = {
-  type: UserType,
-  description: "Retrieves one user",
-  args: { id: { type: GraphQLID } },
-
-  resolve(parent, args) {
-    console.log("Fetching user with id:", args.id);
-    return User.findById(args.id);
-  },
+// For testing only - delete later
+const getUsers = {
+	type: new GraphQLList(UserType),
+	description: 'Retrieves list of users',
+	// resolver function
+	resolve(parent, args) {// eslint-disable-line no-unused-vars
+		return User.find();
+	},
 };
 
-// Retrieves the workout plan for one user
+// Dashboard page
 const userWorkoutPlan = {
-  type: UserType,
-  description: "Retrieves one user",
-  args: { id: { type: GraphQLID } },
+	type: UserType,
+	description: 'Retrieves one user',
+	args: { id: { type: GraphQLID } },
 
-  resolve(parent, args) {
-    console.log("Fetching user with id:", args.id);
-    return User.findById(args.id).select("workoutPlan");
-  },
+	resolve(parent, args) {
+		console.log('Fetching user with id:', args.id);
+		return User.findById(args.id).select('workoutPlan');
+	},
 };
 
-// Retrieves the meal plan for one user
+// Dashboard page
 const userMealPlan = {
-  type: UserType,
-  description: "Retrieves one user",
-  args: { id: { type: GraphQLID } },
+	type: UserType,
+	description: 'Retrieves one user',
+	args: { id: { type: GraphQLID } },
 
-  resolve(parent, args) {
-    console.log("Fetching user with id:", args.id);
-    return User.findById(args.id).select("mealPlan");
-  },
+	resolve(parent, args) {
+		console.log('Fetching user with id:', args.id);
+		return User.findById(args.id).select('mealPlan');
+	},
 };
 
-module.exports = { users, user, userWorkoutPlan, userMealPlan };
+module.exports = { getUser, getUsers, userWorkoutPlan, userMealPlan };

@@ -1,0 +1,42 @@
+/*** OPENAI ***/
+
+.openai-img {
+    background-image: url('../assets/Agrabah.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+.openai-container {
+background-color: var(--call-to-action) !important;
+    padding: 30px;
+    max-width: 325px;
+    max-height: 400px;
+}
+
+.btn-signup {
+    background-color: var(--call-to-action) !important;
+    color: var(--primary-clr) !important;
+}
+
+.btn:hover {
+    color: var(--color-white) !important;
+    font-weight: bold;
+}
+
+.btn:focus {
+    box-shadow: none !important;
+    color: var(--) !important;
+}
+
+.btn:active {
+    color: var(--clr-red) !important;
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    padding: .25rem;
+}
+
+.btn-warning:hover {
+    border-color: var(--primary-clr) !important;
+}

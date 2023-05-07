@@ -1,0 +1,138 @@
+/*** REGISTER ***/
+
+/* Register Form
+  ============================= */
+
+  .form-divider{
+    border: 2px solid ;
+  }
+
+.form-container {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    box-shadow: none;
+}
+
+
+
+
+.form {
+    width: 40%;
+    max-width: 700px;
+    height: auto;
+    padding: 10px;
+    background-color: var(--primary-clr);
+    color: var(--color-white);
+    border-radius: 10px;
+    margin: 3rem auto;
+    text-align: left;
+    box-shadow: none;
+
+}
+
+
+
+.form-label {
+    text-align: left !important;
+    font-size: var(--font-size-small);
+}
+
+.btn-prev {
+    background-color: var(--clr-whitechoco) !important;
+    color: var(--call-to-action) !important;
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+.btn-prev:active {
+    background-color: var(--clr-red) !important;
+    color: var(--color-white) !important;
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+.btn-next {
+    background-color: var(--call-to-action) !important;
+    color: var(--primary-clr) !important;
+
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+.btn-next:active {
+    background-color: var(--color-white) !important;
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+
+
+
+
+.fitness-form {
+    text-align: center;
+}
+
+.custom-select {
+    color: var(--primary-clr) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+.custom-select option:hover {
+    color: var(--color-white) !important;
+    background-color: var(--call-to-action) !important;
+}
+
+.custom-select option:checked {
+    color: white;
+    background-color: var(--call-to-action);
+}
+
+
+.progress-bar {
+    background-color: var(--call-to-action) !important;
+    color: var(--primary-clr) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+.login-here {
+    color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+.btn-group {
+    gap: 1rem;
+}
+
+.submit-btn {
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    background-color: var(--call-to-action) !important;
+    color: var(--primary-clr) !important;
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+    font-weight: var(--fw-bold);
+}
+
+.submit-btn:hover {
+    background-color: var(--color-white) !important;
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+    font-weight: var(--fw-bold);
+}
+
+.submit-btn:active {
+    background-color: var(--clr-red) !important;
+    color: var(--color-white) !important;
+    border-color: var(--color-white) !important;
+    font-size: var(--font-size-small) !important;
+    font-weight: var(--fw-bold);
+}
+
+.push-item{
+    margin: 0 0 0 5rem;
+}

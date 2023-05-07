@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const { createJwtToken } = require("../utils/auth");
 const { fetchOpenAICompletion } = require("../utils/openAIapi");
 
+
 // register new user mutation
 const registerMutation = {
   type: GraphQLString,
@@ -43,11 +44,21 @@ const registerMutation = {
       foodAllergies,
     } = args;
 
-    // check if the user already exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      throw new Error("User already exists");
-    }
+   // Check if email contains capital letter
+		if (/[A-Z]/.test(email)) {
+			throw new Error('Email should not contain capital letters');
+		}
+
+		// check if password is empty
+		if (!password) {
+			throw new Error('Password cannot be empty');
+		}
+
+		// check if the user already exists
+		const userExists = await User.findOne({ email });
+		if (userExists) {
+			throw new Error('User already exists');
+		}
 
     // hash the password
     const salt = await bcrypt.genSalt(10);
@@ -58,6 +69,7 @@ const registerMutation = {
       username,
       email,
       password: hashedPassword,
+      token: '',
       age,
       gender,
       height,
@@ -77,8 +89,13 @@ const registerMutation = {
     // generate jwt token
     const token = createJwtToken(user);
 
-    // return the token
-    return token;
+   // update the user with the token and save it into the DB
+		user.token = token;
+		savedUser = await user.save();
+
+		
+		// return the token
+		return savedUser;
   },
 };
 

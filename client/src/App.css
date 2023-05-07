@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Aladin&display=swap');
+
+/* Base
+    ============================= */
+  * {
+      box-sizing: border-box;
+    }
+
+  body {
+      margin: 0;
+      padding: 0;
+        font-family: var(--font-family-base);
+        font-size: var(--font-size-medium);
+        font-weight: var(--fw-regular);
+        line-height: 1.5;
+        color: var(--color-black);
+        background-color: var(--color-white);
+        text-align: left;
+        text-decoration: none;
+        text-transform: none;
+        text-shadow: none;
+        letter-spacing: normal;
+    }
+
+  :root {
+      --primary-clr: #522A83;
+      --call-to-action: #E4BD5B;
+      --color-black: #090909;
+      --color-white: #ffffff;
+      --clr-red: #A2052C;
+      --clr-russet: #80421F;
+      --clr-brownsugar: #BB6949;
+      --clr-whitechoco: #E8EBD5;
+
+      --text-color: var(--color-white);
+      --gold-text: var(--call-to-action);
+      --valid-color: var(--color-white);
+      --error-color: var(--color-red);
+
+      --font-family-base: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-family-title: 'Aladdin-Regular';
+
+      --font-size-small: 1.2rem;
+      --font-size-medium: 1.6rem;
+      --font-size-large: 1.8rem;
+      --font-size-x-large: 2.3rem;
+      --font-size-xx-large: 4.8rem;
+
+      --fw-light: 300;
+      --fw-regular: 400;
+      --fw-semibold: 600;
+      --fw-bold: 700;
+      --fw-black: 900;
+  }
+
+  /* Global
+ =============================*/
+  .App {
+      border: 1.5px solid var(--primary-clr);
+      border-radius: 5px;
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+  }

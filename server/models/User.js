@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema(
         "Please enter a valid email",
       ],
     },
+    token: {
+			type: String,
+		},
     age: {
       type: Number,
       required: true,
@@ -76,8 +79,7 @@ const userSchema = new mongoose.Schema(
       ],
       required: true,
     },
-    foodAllergies: [
-      {
+    foodAllergies: {
         type: String,
         enum: [
           "No allergies",
@@ -90,7 +92,6 @@ const userSchema = new mongoose.Schema(
           "shellfish",
         ],
       },
-    ],
     workoutPlan: {
       type: String,
     },

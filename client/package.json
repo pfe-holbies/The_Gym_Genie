@@ -10,7 +10,8 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint --fix src",
     "preview": "vite preview",
-    "format": "prettier --write src/**/*.js src/**/*.jsx"
+    "format": "prettier --write src/**/*.js src/**/*.jsx",
+    "test": "vitest --config vitest.config.cjs tests/**/*.test.js"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
