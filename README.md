@@ -4,8 +4,6 @@
 ![Gym Genie](assets/GymGenie.png)
  
 
- 
-
 ## Installation
 Please clone repo 
 ```
@@ -25,15 +23,6 @@ Mouna has assumed the responsibility of building the primary features and RESTfu
 Mouna Ben Ali
 Saif Elleuch
 
- 
- 
  ## Acknowledgments
  * [Holberton School](https://www.holbertonschool.com/) (Staff and Students)
- 
- 
- 
- 
- 
- 
- 
  
