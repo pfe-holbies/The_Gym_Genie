@@ -19,6 +19,8 @@ const GET_USER = gql`
       workoutsPerWeek
       dietType
       foodAllergies
+      workoutPlan
+      mealPlan
     }
   }
 `;

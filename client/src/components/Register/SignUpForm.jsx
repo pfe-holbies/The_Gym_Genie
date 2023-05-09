@@ -1,12 +1,14 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import { REGISTER_USER } from '../../GraphQL/userMutations';
-import { cloneDeep } from '@apollo/client/utilities';
+import { GET_USER } from '../../GraphQL/userQueries';
+import { AuthContext } from '../../context/auth';
 
 export default function SignUpForm() {
+  const context = useContext(AuthContext);
+  let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +24,38 @@ export default function SignUpForm() {
   const [dietType, setDiet] = useState('');
   const [foodAllergies, setAllergies] = useState('');
 
+  
+  const [RegisterUser] = useMutation(REGISTER_USER, {
+    update({ data: { RegisterUser : userData} }) {
+      context.login(userData);
+      navigate('/');
+      const { user } = cache.readQuery({ query: GET_USER });
+      cache.writeQuery({
+      query: GET_USER,
+      data: { user: [...user, RegisterUser] },
+  });
+    },
+    onError(err) {
+      console.log(err);
+    },
+        variables: {
+      username,
+      email,
+      password,
+      age,
+      gender,
+      height,
+      weight,
+      primaryGoal,
+      activityLevel,
+      strengthLevel,
+      workoutType,
+      workoutsPerWeek,
+      dietType,
+      foodAllergies,
+    }
+  });
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -40,13 +74,11 @@ export default function SignUpForm() {
       dietType,
       foodAllergies,
     };
-
+  
     console.log('User Data:', userData);
-    registerMutation({ variables: userData });
-    console.log(
-      `register mutation completed ${userData.username} is registered!`
-    );
-    alert(`${userData.username} is registered!`);
+    // should output the token string
+    RegisterUser({ variables: userData });
+    
 
     setUsername('');
     setEmail('');
@@ -64,41 +96,7 @@ export default function SignUpForm() {
     setAllergies('');
   };
 
-  let navigate = useNavigate();
-  const [registerMutation] = useMutation(REGISTER_USER, {
-    onCompleted({ register }) {
-      // Create a copy of the cache object
-      const cacheCopy = cloneDeep(cache);
-
-      // Modify the copy of the cache object to include the token
-      cacheCopy.writeData({
-        data: {
-          isLoggedIn: true,
-          token: register.token,
-        },
-      });
-
-      // Replace the original cache object with the modified copy
-      client.cache.restore(cacheCopy);
-
-      // set token to Local storage also
-      localStorage.setItem('token', register.token);
-      // Navigate to the login page
-      navigate('/login');
-      navigate('/login');
-      console.log();
-    },
-  });
-
-  const token = localStorage.getItem('token');
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    if (decodedToken.exp * 1000 < Date.now()) {
-      navigate('/login');
-    } else {
-      navigate('/dashboard');
-    }
-  }
+  
 
   return (
     <div className="form">

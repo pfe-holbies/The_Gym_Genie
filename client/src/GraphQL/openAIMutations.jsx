@@ -1,11 +1,15 @@
 import { gql } from '@apollo/client';
 
 const FETCH_WORKOUT = gql`
-     mutation fetchWorkoutMutation{
-
-     }
-    
-
+  mutation fetchWorkoutMutation {
+    fetchWorkoutMutation
+  }
 `;
 
-export { FETCH_WORKOUT };
+const FETCH_MEAL = gql`
+  mutation fetchMealMutation {
+    fetchMealMutation
+  }
+`;
+
+export { FETCH_WORKOUT, FETCH_MEAL };

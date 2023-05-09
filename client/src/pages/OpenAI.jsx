@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function OpenAI() {
   const [showWorkoutsModal, setShowWorkoutsModal] = useState(false);
@@ -28,8 +29,10 @@ export default function OpenAI() {
             </p>
             <hr className="hr-style" />
             <Button
+              
               className="btn-learn"
               onClick={() => setShowWorkoutsModal(true)}
+              
             >
               Workouts
             </Button>
@@ -47,7 +50,9 @@ export default function OpenAI() {
           <Modal.Title>Workouts Modal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Modal content for workouts goes here.</p>
+          <p>Modal content for workouts goes here.
+            <FaSpinner className="spinner" />
+          </p>
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn-signup" onClick={handleWorkoutsModalClose}>

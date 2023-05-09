@@ -3,29 +3,17 @@ const { GraphQLString, GraphQLInt } = require('graphql');
 const bcrypt = require('bcryptjs');
 const { createJwtToken } = require('../utils/auth');
 const { fetchOpenAICompletion } = require('../utils/openAIapi');
+const { UserType, RegisterInputType } = require('./typeDefs');
 
-// register new user mutation
+// register mutation
 const registerMutation = {
-  type: GraphQLString,
-  description: 'Register new user',
+  type: UserType,
+  description: 'Register new User',
   args: {
-    username: { type: GraphQLString },
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
-    age: { type: GraphQLInt },
-    gender: { type: GraphQLString },
-    height: { type: GraphQLInt },
-    weight: { type: GraphQLInt },
-    primaryGoal: { type: GraphQLString },
-    activityLevel: { type: GraphQLString },
-    strengthLevel: { type: GraphQLString },
-    workoutType: { type: GraphQLString },
-    workoutsPerWeek: { type: GraphQLInt },
-    dietType: { type: GraphQLString },
-    foodAllergies: { type: GraphQLString },
+    test: { type: RegisterInputType },
   },
   // resolver function
-  async resolve(parent, args) {
+  async resolve(parent,   { test }) {
     const {
       username,
       email,
@@ -41,7 +29,7 @@ const registerMutation = {
       workoutsPerWeek,
       dietType,
       foodAllergies,
-    } = args;
+    } = test;
 
     // Check if email contains capital letter
     if (/[A-Z]/.test(email)) {
@@ -64,7 +52,7 @@ const registerMutation = {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // create new user
-    const user = new User({
+    const newUser = new User({
       username,
       email,
       password: hashedPassword,
@@ -80,22 +68,22 @@ const registerMutation = {
       workoutsPerWeek,
       dietType,
       foodAllergies,
+      createdAt: new Date().toISOString()
     });
 
     // save the new user into the database
-    await user.save();
+    newUser.token = createJwtToken(newUser);
 
-    // generate jwt token
-    const token = createJwtToken(user);
-
-    // update the user with the token and save it into the DB
-    user.token = token;
-    savedUser = await user.save();
-
-    // return the token
-    return savedUser;
+    const res = await newUser.save();
+    
+    // return the new user
+     return {
+                id: res.id,
+                ...res._doc
+            };
   },
 };
+
 
 // login mutation
 const loginMutation = {
@@ -170,12 +158,12 @@ const fetchWorkoutMutation = {
     Topic: Personalized Fitness and Workouts plan
     Style: Poetic Rythme Persuasive Creative Descriptive
     Tone: Witty Funny Encouraging  Cooperative Joyful
-    Your Name: The Gym Genie 
+    Your Name: GymGenie 
     Personality: Act like the genie in the aladdin movie be silly funny witty say clever things that rythme
-    Audience: Neutral audience 
-    Length: 2 paragraphs
+    Audience: Fitness audience 
+    Length: 150 words max
     Format: Text
-    Start your response always With: ABRACADABRA! Master ${username} Let me be your Gym Genie and grant you the perfect workout plan to reach your goal ${primaryGoal}.`;
+    Start your response always With: ABRACADABRA! Master ${username} Let me be your GymGenie and grant you the perfect workout plan to reach your goal ${primaryGoal}.`;
 
     // OpenAI API endpoint argument
     const apiEndpoint = 'https://api.openai.com/v1/completions';
@@ -223,12 +211,12 @@ const fetchMealMutation = {
     Topic: Personalized Diet and Nutrition plan
     Style: Poetic Rythme Persuasive Creative Descriptive
     Tone: Witty Funny Encouraging  Cooperative Joyful
-    Your Name: The Gym Genie 
+    Your Name: GymGenie 
     Personality: Act like the genie in the aladdin movie be silly funny witty say clever things that rythme
-    Audience: Neutral audience 
-    Length: 2 paragraphs 
+    Audience: Fitness audience 
+    Length: 150 words max
     Format: Text
-    Start your response always With: ABRACADABRA! Master ${username} Let me be your Gym Genie and grant you the perfect meal plan to reach your nutrition goals.`;
+    Start your response always With: ABRACADABRA! Master ${username} Let me be your GymGenie and grant you the perfect meal plan to reach your nutrition goals.`;
 
     // OpenAI API endpoint argument
     const apiEndpoint = 'https://api.openai.com/v1/completions';
