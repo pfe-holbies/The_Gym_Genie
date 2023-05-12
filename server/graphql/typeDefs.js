@@ -1,9 +1,10 @@
 const {
   GraphQLObjectType,
+   GraphQLInputObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLInputObjectType
 } = require('graphql');
+
 
 // Define UserType
 const UserType = new GraphQLObjectType({
@@ -33,9 +34,9 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
-// Define RegisterInputType
+// Define RegisterInputType for register mutation
 const RegisterInputType = new GraphQLInputObjectType({
-  name: 'reg',
+  name: 'registerInput',
   description: 'Register input type',
   fields: () => ({
     username: { type: GraphQLString },
@@ -55,16 +56,6 @@ const RegisterInputType = new GraphQLInputObjectType({
   }),
 });
 
-// Define LoginInputType
-const LoginInputType = new GraphQLInputObjectType({
-  name: 'LoginInput',
-  description: 'Login input type',
-  fields: () => ({
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
-  }),
-});
 
 
-
-module.exports = { UserType, RegisterInputType, LoginInputType };
+module.exports = { UserType, RegisterInputType };

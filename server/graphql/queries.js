@@ -2,19 +2,19 @@ const { GraphQLList, GraphQLID } = require('graphql');
 const { UserType } = require('./typeDefs');
 const { User } = require('../models/User.js');
 
-// Profile page tested
+// Get user by id
 const getUser = {
   type: UserType,
   description: 'Retrieves one user',
   args: { id: { type: GraphQLID } },
-
+  // resolver function
   resolve(parent, args) {
     console.log('Fetching user with id:', args.id);
     return User.findById(args.id);
   },
 };
 
-// For testing only - delete later
+// Get all users
 const getUsers = {
   type: new GraphQLList(UserType),
   description: 'Retrieves list of users',
@@ -25,24 +25,24 @@ const getUsers = {
   },
 };
 
-// Dashboard page
+// Fetch workout plan from DB to render on Dashboard page
 const userWorkoutPlan = {
   type: UserType,
   description: 'Retrieves one user',
   args: { id: { type: GraphQLID } },
-
+  // resolver function
   resolve(parent, args) {
     console.log('Fetching Workout for User with id:', args.id);
     return User.findById(args.id).select('workoutPlan');
   },
 };
 
-// Dashboard page
+// Fetch meal plan from DB to render on Dashboard page
 const userMealPlan = {
   type: UserType,
   description: 'Retrieves one user',
   args: { id: { type: GraphQLID } },
-
+ // resolver function
   resolve(parent, args) {
     console.log('Fetching user with id:', args.id);
     return User.findById(args.id).select('mealPlan');

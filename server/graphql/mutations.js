@@ -1,19 +1,19 @@
 const { User } = require('../models/User');
-const { GraphQLString, GraphQLInt } = require('graphql');
+const { UserType, RegisterInputType } = require('./typeDefs');
+const { GraphQLString } = require('graphql');
 const bcrypt = require('bcryptjs');
 const { createJwtToken } = require('../utils/auth');
-const { fetchOpenAICompletion } = require('../utils/openAIapi');
-const { UserType, RegisterInputType } = require('./typeDefs');
+const { fetchOpenAICompletion } = require('../utils/OpenaiAPI');
 
 // register mutation
 const registerMutation = {
   type: UserType,
   description: 'Register new User',
   args: {
-    test: { type: RegisterInputType },
+    signupInput: { type: RegisterInputType },
   },
   // resolver function
-  async resolve(parent,   { test }) {
+  async resolve(parent, { signupInput }) {
     const {
       username,
       email,
@@ -29,29 +29,40 @@ const registerMutation = {
       workoutsPerWeek,
       dietType,
       foodAllergies,
-    } = test;
+    } = signupInput;
 
-    // Check if email contains capital letter
+    // global necessary checks for user registration errors
+    // if username is empty
+    if (!username) {
+      throw new Error('Username cannot be empty');
+    }
+
+    // if email is empty
+    if (!email) {
+      throw new Error('Email cannot be empty');
+    }
+
+    // if email contains capital letter
     if (/[A-Z]/.test(email)) {
       throw new Error('Email should not contain capital letters');
     }
 
-    // check if password is empty
+    // if password is empty
     if (!password) {
       throw new Error('Password cannot be empty');
     }
 
-    // check if the user already exists
+    // if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
       throw new Error('User already exists');
     }
 
-    // hash the password
+    // hash the password before saving it to the DB
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // create new user
+    // create new user object
     const newUser = new User({
       username,
       email,
@@ -68,28 +79,27 @@ const registerMutation = {
       workoutsPerWeek,
       dietType,
       foodAllergies,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     });
 
-    // save the new user into the database
+    // save the user with concatenated token to DB
     newUser.token = createJwtToken(newUser);
+    const result = await newUser.save();
 
-    const res = await newUser.save();
-    
-    // return the new user
-     return {
-                id: res.id,
-                ...res._doc
-            };
+    // retun the new user
+    return {
+      id: result.id,
+      ...result._doc,
+    };
   },
 };
 
-
 // login mutation
 const loginMutation = {
-  type: GraphQLString,
+  type: UserType,
   description: 'Login user',
   args: {
+    username: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
   },
@@ -104,22 +114,25 @@ const loginMutation = {
     }
 
     // generate jwt token
-    const token = createJwtToken(user);
-    console.log(`The user with email:${args.email} is logged in ${token}`);
+    user.refreshToken = createJwtToken(user);
+    await user.save();
 
-    // return the token
-    return token;
+    // return the user with the token
+    return {
+      id: user.id,
+      ...user._doc,
+    };
   },
 };
 
 // fetch workout plan from openai api mutation
 const fetchWorkoutMutation = {
-  type: GraphQLString,
+  type: UserType,
   description: 'fetch workout plan from openai api mutation',
   args: {},
   // resolver function
   async resolve(parent, args, { verifiedUser }) {
-    // fetch user data from database
+    // fetch Auth/verified user data from database
     const user = await User.findOne({
       username: verifiedUser.username,
       age: verifiedUser.age,
@@ -138,7 +151,7 @@ const fetchWorkoutMutation = {
       throw new Error('Invalid credentials');
     }
 
-    // destructure user data from database
+    // destructure user data from database to send it to OpenAI API
     const {
       username,
       age,
@@ -156,14 +169,15 @@ const fetchWorkoutMutation = {
     const prompt = `
     Task: write a personalized workout plan for workout days equal ${workoutsPerWeek} for your master ${username} don't forget to mention  his/her ${age}-year-old, his/her ${gender}, his/her${height} his/her${weight}, with his/her${primaryGoal}and his/her${activityLevel} and his/her${strengthLevel} and his/her${workoutType}.
     Topic: Personalized Fitness and Workouts plan
-    Style: Poetic Rythme Persuasive Creative Descriptive
+    Layout: Greeting, Introduction, Body, Conclusion
+    Style: Poem stanza Poetic Rythme Persuasive Creative Descriptive
     Tone: Witty Funny Encouraging  Cooperative Joyful
     Your Name: GymGenie 
     Personality: Act like the genie in the aladdin movie be silly funny witty say clever things that rythme
     Audience: Fitness audience 
     Length: 150 words max
-    Format: Text
-    Start your response always With: ABRACADABRA! Master ${username} Let me be your GymGenie and grant you the perfect workout plan to reach your goal ${primaryGoal}.`;
+    Format: Text 
+    Start your response always With: ABRACADABRA! Master ${username}! You rubbed my lamp and I will grant you the perfect workout plan to reach your goal ${primaryGoal}.`;
 
     // OpenAI API endpoint argument
     const apiEndpoint = 'https://api.openai.com/v1/completions';
@@ -174,14 +188,17 @@ const fetchWorkoutMutation = {
     // save the workout plan completion to database
     await User.findOneAndUpdate({ username }, { workoutPlan });
 
-    // Update workoutplan for user in database and return the updated workout plan
-    return User.findOne({ username }).exec();
+    // Update workoutplan for user in database and return the user
+    return {
+      id: user.id,
+      ...user._doc,
+    };
   },
 };
 
 // fetch meal plan from openai api mutation
 const fetchMealMutation = {
-  type: GraphQLString,
+  type: UserType,
   description: 'fetch meal plan from openai api mutation',
   args: {},
   // resolver function
@@ -227,8 +244,11 @@ const fetchMealMutation = {
     // save the meal plan completion to database
     await User.findOneAndUpdate({ username }, { mealPlan });
 
-    // Update mealplan for user in database and return the updated meal plan
-    return User.findOne({ username }).exec();
+    // Update mealplan for user in database and return the user
+    return {
+      id: user.id,
+      ...user._doc,
+    };
   },
 };
 
@@ -237,5 +257,5 @@ module.exports = {
   registerMutation,
   loginMutation,
   fetchWorkoutMutation,
-  fetchMealMutation,
+  fetchMealMutation
 };

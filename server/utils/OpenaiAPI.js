@@ -2,10 +2,13 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const openAIKey = process.env.OPENAI_API_KEY;
+
+// import node-fetch dynamically to avoid error in browser
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-// Call to OpenAI API for completion request takes args prompt and apiEndpoint and returns data
+
+// async function call to OpenAI API for completion request takes args prompt and apiEndpoint and returns data
 async function fetchOpenAICompletion(prompt, apiEndpoint) {
   // OpenAI API POST request model: "text-davinci-003"
   const response = await fetch(apiEndpoint, {

@@ -1,9 +1,9 @@
 /* global process */
 const mongoose = require('mongoose');
 
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', true);
 
-// Async Connection to MongoDB Database
+// Async Connection to MongoDB Database using Mongoose ODM (Object Data Modeling)
 const connectDB = async () => {
   try {
     const connection = await mongoose.connect(process.env.MONGO_URI);

@@ -18,7 +18,7 @@ connectDB();
 // add CORS
 GraphQLServer.use(cors());
 
-// Authentication middleware
+// Authentication middleware layer for resources protection
 GraphQLServer.use(is_authenticated);
 
 // Routes

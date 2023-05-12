@@ -1,7 +1,7 @@
 {
-  "name": "server_side_tgg",
+  "name": "server_side_gg",
   "version": "1.0.0",
-  "description": "Server Side of GymGenie a MERNG Stack web app consuming the third party API of OpenAI to generate Text Completions for the user.",
+  "description": "This Express app is a protected GraphQL API server that uses Prompt Engineering to consume the OpenAI API for generating personalized workout and meal plans, and includes MongoDB database connection, authentication middleware, CORS, and error handling.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
