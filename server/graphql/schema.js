@@ -1,6 +1,6 @@
 const { GraphQLSchema, GraphQLObjectType } = require('graphql');
 
-// Import queries 
+// Import queries
 const {
   getUser,
   getUsers,
@@ -16,7 +16,7 @@ const {
   fetchMealMutation,
 } = require('./mutations');
 
-// Define QueryType 
+// Define QueryType
 const QueryType = new GraphQLObjectType({
   name: 'QueryType',
   description: 'Queries',

@@ -1,94 +1,111 @@
-import { useState } from 'react';
+import GymGeniePurple from '../../assets/GymGeniePurple.png';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useContext, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { LOG_USER } from '../../GraphQL/userMutations';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../utils/authContext';
 
 export default function LoginForm() {
+  const context = useContext(AuthContext);
+  let navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  // Toggle Password Visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const [loginMutation] = useMutation(LOG_USER, {
-    onCompleted({ login }) {
-      // Store the token in the local storage
-      localStorage.setItem('token', login);
-      console.log(`User with email: ${email} is logged in`);
-      alert(`${email} is logged in!`);
-      navigate('/dashboard');
-    },
-    onError(error) {
-      console.log(error.message);
-      alert('Invalid credentials');
-    },
-  });
 
+  // handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-      email,
-      password,
-    };
+    loginMutation();
+    console.log(`User ${username} logged in successfully`);
 
-    loginMutation({ variables: userData });
+    setUsername('');
     setEmail('');
     setPassword('');
   };
 
-  return (
-    <div className="form login-form">
-      <div className="form-container">
-        <div className="header">
-          <h2 className="mb-3">Member Login</h2>
-        </div>
-        <div className="body">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-2 ">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="form-control-sm"
-                style={{ width: '115%' }}
-              />
-            </Form.Group>
+  // trigger backend loginMutation() function
+  const [loginMutation] = useMutation(LOG_USER, {
+    update(_, { data: { loginMutation: userData } }) {
+      context.login(userData);
+      navigate('/dashboard');
+    },
+    variables: {
+      username,
+      email,
+      password,
+    },
+  });
 
-            <Form.Group className="mb-2">
-              <Form.Label>Password</Form.Label>
-              <div className="password-input-container">
+  return (
+    <div className="login-box">
+      <div className="form login-form">
+        <div className="login-form-container">
+          <div className="header">
+            <h2 className="mb-3 text-center ">Log in to your account</h2>
+          </div>
+          <div className="body ">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-2 form-control-sm ">
+                <Form.Label>Username</Form.Label>
                 <Form.Control
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="text"
+                  placeholder="Username..."
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="form-control-sm"
+                  style={{ width: '115%' }}
                 />
-                <span
-                  className="password-icon"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
-                </span>
-              </div>
-            </Form.Group>
-            <p className="text-center small">
-              Don't have an account? Register{' '}
-              <Link to="/register" className="register-here">
-                here
-              </Link>
-            </p>
-            <Link to="/openai">
-              <Button className="login-btn mt-2" type="submit">
+              </Form.Group>
+              <Form.Group className="mb-2 form-control-sm ">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Email..."
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-control-sm"
+                  style={{ width: '115%' }}
+                />
+              </Form.Group>
+              <Form.Group className="mb-2 form-control-sm">
+                <Form.Label>Password</Form.Label>
+                <div className="password-input-container">
+                  <Form.Control
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password..."
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span
+                    className="password-icon"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                </div>
+              </Form.Group>
+              <p className="text-center small">
+                Don't have an account?{' '}
+                <Link to="/register" className="register-here">
+                  Register
+                </Link>
+              </p>
+              <Button
+                className="login-btn push-btn "
+                type="submit"
+                onClick={handleSubmit}
+              >
                 Login
               </Button>
-            </Link>
-          </Form>
+            </Form>
+          </div>
+          <div> </div>
+          <img src={GymGeniePurple} className="login-img" />
         </div>
       </div>
     </div>

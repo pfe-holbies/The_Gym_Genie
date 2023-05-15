@@ -2,7 +2,7 @@
   "name": "client",
   "private": true,
   "version": "0.0.0",
-  "description": "Client Side of GymGenie a MERNG Stack web app consuming the third party API of OpenAI to generate Text Completions for the user.",
+  "description": "Client Side of GymGenie a MERN GraphQL Stack web app consuming the third party API of OpenAI to generate Text Completions for the user.",
   "type": "module",
   "scripts": {
     "dev": "vite",

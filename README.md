@@ -1,7 +1,7 @@
 # GymGenie MERN GraphQL WEB APP 
  
  
-![Gym Genie](assets/GymGenie.png)
+![Gym Genie](assets/Aladdin_Palace.webp)
  
 
 ## Installation

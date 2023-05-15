@@ -1,10 +1,9 @@
 const {
   GraphQLObjectType,
-   GraphQLInputObjectType,
+  GraphQLInputObjectType,
   GraphQLString,
   GraphQLInt,
 } = require('graphql');
-
 
 // Define UserType
 const UserType = new GraphQLObjectType({
@@ -55,7 +54,5 @@ const RegisterInputType = new GraphQLInputObjectType({
     foodAllergies: { type: GraphQLString },
   }),
 });
-
-
 
 module.exports = { UserType, RegisterInputType };

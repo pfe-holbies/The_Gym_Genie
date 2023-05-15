@@ -1,13 +1,14 @@
 import { gql } from '@apollo/client';
 
+// trigger getUser() from backend
 const GET_USER = gql`
   query getUser($id: ID!) {
     getUser(id: $id) {
       id
+      token
       username
       email
       password
-      token
       age
       gender
       height

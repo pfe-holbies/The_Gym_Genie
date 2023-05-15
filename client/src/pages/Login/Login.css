@@ -1,0 +1,98 @@
+/*** LOGIN ***/
+
+.login-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border: 3px solid var(--color-white) !important;
+    background-color: var(--primary-clr) !important;
+    padding: 40px;
+    max-width: 900px;
+    max-height: 600px;
+    border-radius: 5%;
+}
+
+.login-form {
+    margin: 0 auto;
+    margin-left: 50%;
+    border: 3px solid !important;
+    background-color: var(--call-to-action) !important;
+    padding: 40px;
+    max-width: 525px;
+    max-height: 450px;
+    border-radius: 5%;
+}
+
+.login-form-container{
+    display: flex;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    border-radius: 45%;
+    box-shadow: none;
+}
+
+.login-img {
+    height: 50%;
+    width: 110%;
+    margin-left: -25%;
+    margin-top: 20px;
+    margin-bottom: 20%;
+    border-radius: 85%;
+    transform: translate(-360px, -450px);
+}
+
+.form-control-sm {
+    width: 100%;
+}
+
+.login-btn {
+    display: block;
+    text-decoration: none !important;
+    background-color: var(--primary-clr) !important;
+    color: var(--call-to-action) !important;
+    border-color: var(--call-to-action) !important;
+    font-size: var(--font-size-small) !important;
+    font-weight: var(--fw-bold);
+}
+
+.push-btn{
+    margin: 0 0 0 4rem !important;
+}
+
+.register-here {
+    text-decoration: none;
+    color: var(--primary-clr);
+    font-size: var(--font-size-small) !important;
+    text-shadow: 1px 1px 1px var(--color-white);
+}
+
+.register-here:hover {
+    color: var(--clr-red);
+}
+
+.password-input-container {
+    position: relative;
+}
+
+.password-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0.5rem 1rem 1rem 1rem;
+    color: var(--primary-clr);
+    cursor: pointer; 
+    border-radius: 50%;
+}
+
+.text-center{
+    text-shadow: var(--primary-clr) 0px 0px 10px;
+}

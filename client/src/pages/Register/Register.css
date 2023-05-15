@@ -3,7 +3,7 @@
 /* Register Form
   ============================= */
 
-  .form-divider{
+.form-divider{
     border: 2px solid ;
   }
 
@@ -16,8 +16,15 @@
     box-shadow: none;
 }
 
-
-
+.password-visibility-icon{
+    color: var(--primary-clr);
+    border-radius: 150%;
+    padding: 0.3rem;
+    margin-left: -3rem;
+    margin-bottom: 0.125rem;
+    margin-top: 0.125rem;
+    max-height: 40px;
+}
 
 .form {
     width: 40%;
@@ -30,10 +37,7 @@
     margin: 3rem auto;
     text-align: left;
     box-shadow: none;
-
 }
-
-
 
 .form-label {
     text-align: left !important;
@@ -68,10 +72,6 @@
     font-size: var(--font-size-small) !important;
 }
 
-
-
-
-
 .fitness-form {
     text-align: center;
 }
@@ -90,7 +90,6 @@
     color: white;
     background-color: var(--call-to-action);
 }
-
 
 .progress-bar {
     background-color: var(--call-to-action) !important;

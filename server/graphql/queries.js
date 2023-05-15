@@ -42,7 +42,7 @@ const userMealPlan = {
   type: UserType,
   description: 'Retrieves one user',
   args: { id: { type: GraphQLID } },
- // resolver function
+  // resolver function
   resolve(parent, args) {
     console.log('Fetching user with id:', args.id);
     return User.findById(args.id).select('mealPlan');

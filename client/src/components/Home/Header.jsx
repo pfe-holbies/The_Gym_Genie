@@ -5,11 +5,13 @@ export default function Header() {
     <>
       <div className="header-img" id="header">
         <Navhome />
-        <div className="home-banner-container">
+        <div className="  home-banner-container">
           <div className="home-text-section">
-            <h2 className="home-text-section mt-5 ms-5">
-              Fitness is the most important part of your day
-            </h2>
+            <h1 className="home-title-section mt-5 ms-5">
+              If <span className="text-highlight">Health</span> is your priority
+              and <span className="text-highlight">Fitness</span> is the most
+              important part of your day
+            </h1>
             <p className="home-text">
               We are here to help you
               <br />

@@ -1,14 +1,16 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../../utils/authContext';
 import { REGISTER_USER } from '../../GraphQL/userMutations';
-import { GET_USER } from '../../GraphQL/userQueries';
-import { AuthContext } from '../../context/auth';
 
 export default function SignUpForm() {
   const context = useContext(AuthContext);
   let navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,21 +26,18 @@ export default function SignUpForm() {
   const [dietType, setDiet] = useState('');
   const [foodAllergies, setAllergies] = useState('');
 
-  
-  const [RegisterUser] = useMutation(REGISTER_USER, {
-    update({ data: { RegisterUser : userData} }) {
+  // Toggle Password Visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Trigger backend registerMutation() function
+  const [registerMutation, { loading }] = useMutation(REGISTER_USER, {
+    update(_, { data: { registerMutation: userData } }) {
       context.login(userData);
-      navigate('/');
-      const { user } = cache.readQuery({ query: GET_USER });
-      cache.writeQuery({
-      query: GET_USER,
-      data: { user: [...user, RegisterUser] },
-  });
+      navigate('/login');
     },
-    onError(err) {
-      console.log(err);
-    },
-        variables: {
+    variables: {
       username,
       email,
       password,
@@ -53,32 +52,34 @@ export default function SignUpForm() {
       workoutsPerWeek,
       dietType,
       foodAllergies,
-    }
+    },
   });
-  
+
+  // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
-      username,
-      email,
-      password,
-      age,
-      gender,
-      height,
-      weight,
-      primaryGoal,
-      activityLevel,
-      strengthLevel,
-      workoutType,
-      workoutsPerWeek,
-      dietType,
-      foodAllergies,
+      signupInput: {
+        username,
+        email,
+        password,
+        age,
+        gender,
+        height,
+        weight,
+        primaryGoal,
+        activityLevel,
+        strengthLevel,
+        workoutType,
+        workoutsPerWeek,
+        dietType,
+        foodAllergies,
+      },
     };
-  
-    console.log('User Data:', userData);
-    // should output the token string
-    RegisterUser({ variables: userData });
-    
+
+    registerMutation({ variables: userData });
+
+    console.log('New User Data:', userData);
 
     setUsername('');
     setEmail('');
@@ -96,35 +97,40 @@ export default function SignUpForm() {
     setAllergies('');
   };
 
-  
-
   return (
     <div className="form">
       <div className="form-container">
         <div className="form-header">
-          <h2>Register Here</h2>
+          <h2>Create your account</h2>
         </div>
         <div className="form-body"></div>
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter username..."
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Form.Group>
-            </Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Username..."
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Form.Group>
+
             <Col>
               <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter your password..."
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="d-flex">
+                  <Form.Control
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password..."
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span
+                    className="password-visibility-icon ml-auto"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </span>
+                </div>
               </Form.Group>
             </Col>
           </Row>
@@ -135,7 +141,7 @@ export default function SignUpForm() {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter valid email..."
+                  placeholder="Email..."
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
@@ -173,7 +179,7 @@ export default function SignUpForm() {
                 <Form.Label>Height</Form.Label>
                 <Form.Control
                   type="number"
-                  placeholder="Height in cm"
+                  placeholder="cm..."
                   onChange={(e) => setHeight(parseInt(e.target.value))}
                 />
               </Form.Group>
@@ -183,7 +189,7 @@ export default function SignUpForm() {
                 <Form.Label>Weight</Form.Label>
                 <Form.Control
                   type="number"
-                  placeholder="Weight in kgs"
+                  placeholder="kgs..."
                   onChange={(e) => setWeight(parseInt(e.target.value))}
                 />
               </Form.Group>
@@ -201,12 +207,12 @@ export default function SignUpForm() {
                   <option value=""></option>
                   <option value="Lose Weight">Lose Weight</option>
                   <option value="Gain Muscle">Gain Muscle</option>
-                  <option value="Gain Weigh">Gain Weight</option>
+                  <option value="Gain Weight">Gain Weight</option>
                   <option value="Maintain Weight">Maintain Weight</option>
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col>
+            <Row>
               <Form.Group className="mb-3">
                 <Form.Label>Activity Level</Form.Label>
                 <Form.Select
@@ -220,10 +226,10 @@ export default function SignUpForm() {
                   <option value="Very Active">Very Active</option>
                 </Form.Select>
               </Form.Group>
-            </Col>
+            </Row>
           </Row>
           <Row>
-            <Col>
+            <Row>
               <Form.Group className="mb-3">
                 <Form.Label>Strength Level</Form.Label>
                 <Form.Select
@@ -236,8 +242,8 @@ export default function SignUpForm() {
                   <option value="Advanced">Advanced</option>
                 </Form.Select>
               </Form.Group>
-            </Col>
-            <Col>
+            </Row>
+            <Row>
               <Form.Group className="mb-3">
                 <Form.Label>Workout Type</Form.Label>
                 <Form.Select
@@ -250,70 +256,71 @@ export default function SignUpForm() {
                   <option value="Flexibility">Flexibility</option>
                 </Form.Select>
               </Form.Group>
-            </Col>
+            </Row>
           </Row>
+
           <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Workouts</Form.Label>
-                <Form.Select
-                  type="number"
-                  className="custom-select"
-                  onChange={(e) => setWorkoutNum(parseInt(e.target.value))}
-                >
-                  <option value=""></option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Diet Type </Form.Label>
-                <Form.Select
-                  className="custom-select"
-                  onChange={(e) => setDiet(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="No restriction">No restriction</option>
-                  <option value="Vegan">Vegan</option>
-                  <option value="Vegetarian">Vegetarian</option>
-                  <option value="Pescatarian">Pescatarian</option>
-                  <option value="Keto">Keto</option>
-                  <option value="Paleo">Paleo</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Food Allergies</Form.Label>
-                <Form.Select
-                  className="custom-select"
-                  onChange={(e) => setAllergies(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="No allergies">No allergies</option>
-                  <option value="gluten">Gluten</option>
-                  <option value="dairy">Dairy</option>
-                  <option value="nuts">Nuts</option>
-                  <option value="eggs">Eggs</option>
-                  <option value="soy">Soy</option>
-                  <option value="fish">Fish</option>
-                  <option value="shellfish">Shellfish</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Workouts</Form.Label>
+              <Form.Select
+                type="number"
+                className="custom-select"
+                onChange={(e) => setWorkoutNum(parseInt(e.target.value))}
+              >
+                <option value=""></option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </Form.Select>
+            </Form.Group>
           </Row>
           <hr className="form-divider" />
+          <Row>
+            <Form.Group className="mb-3">
+              <Form.Label>Diet Type </Form.Label>
+              <Form.Select
+                className="custom-select"
+                onChange={(e) => setDiet(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="No restriction">No restriction</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Pescatarian">Pescatarian</option>
+                <option value="Keto">Keto</option>
+                <option value="Paleo">Paleo</option>
+              </Form.Select>
+            </Form.Group>
+          </Row>
+          <Row>
+            <Form.Group className="mb-3">
+              <Form.Label>Food Allergies</Form.Label>
+              <Form.Select
+                className="custom-select"
+                onChange={(e) => setAllergies(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="No allergies">No allergies</option>
+                <option value="gluten">Gluten</option>
+                <option value="dairy">Dairy</option>
+                <option value="nuts">Nuts</option>
+                <option value="eggs">Eggs</option>
+                <option value="soy">Soy</option>
+                <option value="fish">Fish</option>
+                <option value="shellfish">Shellfish</option>
+              </Form.Select>
+            </Form.Group>
+          </Row>
+
+          <hr className="form-divider" />
           <p className="push-item">
-            Already have an account?{' '}
+            Have an account?{' '}
             <Link to="/login" className="login-here">
-              Log in here
+              Log in now
             </Link>
           </p>
           <hr className="form-divider" />
-          <Button className="submit-btn" type="submit">
+          <Button className="submit-btn" type="submit" onClick={handleSubmit}>
             Submit
           </Button>
         </Form>

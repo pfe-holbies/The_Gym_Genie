@@ -1,0 +1,56 @@
+/*** DASHBOARD ***/
+
+.layout-img {
+    background-image: url('../../assets/Aladdin_Palace.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.layout-container {
+    margin: 0 0 0 0;
+    padding: 100px;
+    height: 200%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout-table {
+    margin: 0 0 0 0!important;
+    padding: 1rem 1rem 1rem 1rem !important;
+    font-weight: var(--fw-regular);
+    font-size: var(--font-size-large);
+    color: var(--color-white) !important;
+    max-width: 600px;
+    background-color: rgba(82, 42, 131, 0.8);
+    background-image: linear-gradient(to bottom right, var(--primary-clr), var(--call-to-action));
+    opacity: 0.8;
+}
+
+.layout-table tbody tr:hover {
+    background-color: var(--call-to-action);
+    background-color: rgba(75, 23, 134, 0.5);
+}
+
+.confirm-btn{
+    height: 200px;
+}
+
+.btn-dashboard{
+    background-color: var(--color-white) !important;
+    color: var(--call-to-action) !important;
+    border: 1px solid var(--call-to-action) !important;
+}
+
+.btn-dashboard:hover{
+    background-color: var(--primary-clr) !important;
+    color: var(--color-white) !important;
+}
+
+.margin{
+    transform: translateX(150px);
+}

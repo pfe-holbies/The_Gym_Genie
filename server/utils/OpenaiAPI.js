@@ -7,7 +7,6 @@ const openAIKey = process.env.OPENAI_API_KEY;
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-
 // async function call to OpenAI API for completion request takes args prompt and apiEndpoint and returns data
 async function fetchOpenAICompletion(prompt, apiEndpoint) {
   // OpenAI API POST request model: "text-davinci-003"

@@ -9,22 +9,23 @@
   body {
       margin: 0;
       padding: 0;
-        font-family: var(--font-family-base);
-        font-size: var(--font-size-medium);
-        font-weight: var(--fw-regular);
-        line-height: 1.5;
-        color: var(--color-black);
-        background-color: var(--color-white);
-        text-align: left;
-        text-decoration: none;
-        text-transform: none;
-        text-shadow: none;
-        letter-spacing: normal;
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-medium);
+      font-weight: var(--fw-regular);
+      line-height: 1.5;
+      color: var(--color-black);
+      background-color: var(--color-white);
+      text-align: left;
+      text-decoration: none;
+      text-transform: none;
+      text-shadow: none;
+      letter-spacing: normal;
     }
 
   :root {
       --primary-clr: #522A83;
-      --call-to-action: #E4BD5B;
+      --gold-clr: #FFD700;
+      --call-to-action: #E4BD5B; 
       --color-black: #090909;
       --color-white: #ffffff;
       --clr-red: #A2052C;
@@ -33,12 +34,12 @@
       --clr-whitechoco: #E8EBD5;
 
       --text-color: var(--color-white);
-      --gold-text: var(--call-to-action);
+      --gold-text: var(--gold-clr);
       --valid-color: var(--color-white);
       --error-color: var(--color-red);
 
-      --font-family-base: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --font-family-title: 'Aladdin-Regular';
+      --font-family-base: 'Aladin', cursive;
+      --font-family-title: 'Aladin', cursive;
 
       --font-size-small: 1.2rem;
       --font-size-medium: 1.6rem;
@@ -55,9 +56,20 @@
 
   /* Global
  =============================*/
-  .App {
-      border: 1.5px solid var(--primary-clr);
+  .App-container{
+      border: 1.5px solid var(--primary-clr)!important;
       border-radius: 5px;
-      margin: 0 0 0 0;
-      padding: 0 0 0 0;
+      margin: 0 auto;
+      padding: 0 1rem;
+      max-width: 1200px !important;
+      max-width: 1200px !important;
+      background-color: var(--color-white);
+      color: var(--color-black);
+      font-family: var(--font-family-base);
+      font-weight: var(--fw-regular);
+      font-size: var(--font-size-small)!important;
+      line-height: 1.5;
+      text-decoration: none ;
+      text-transform: none;
+      letter-spacing: normal;
   }

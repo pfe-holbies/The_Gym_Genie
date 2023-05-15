@@ -1,7 +1,7 @@
+import { Container, Row, Col } from 'react-bootstrap';
 import Workout from '../../assets/workout.png';
 import Meal from '../../assets/meal.png';
 import Tracker from '../../assets/tracker.png';
-import { Container, Row, Col } from 'react-bootstrap';
 
 export default function Services() {
   return (
@@ -15,19 +15,19 @@ export default function Services() {
         <Col className="service">
           <img src={Workout} alt="Service 1" className="service-image" />
           <p className="service-text">
-            Personalized workout plans <br /> tailored to your needs.
+            Get Personalized Workout Plans <br /> Tailored To Your Needs
           </p>
         </Col>
         <Col className="service">
           <img src={Meal} alt="Service 2" className="service-image" />
           <p className="service-text">
-            Curated meal plans <br /> for a healthy diet.
+            Receive Curated Meal Plans <br /> For A Nutrious and Healthy Diet
           </p>
         </Col>
         <Col className="service">
           <img src={Tracker} alt="Service 3" className="service-image" />
           <p className="service-text">
-            Detailed progress reports to <br /> track your fitness journey.
+            Track Your Fitness Journey <br /> With Detailed Progress reports
           </p>
         </Col>
       </Row>

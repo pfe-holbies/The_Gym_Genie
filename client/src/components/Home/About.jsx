@@ -1,5 +1,5 @@
-import { Row, Col, Container } from 'react-bootstrap';
 import GymGenie from '../../assets/GymGenie.png';
+import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export default function About() {
@@ -7,14 +7,13 @@ export default function About() {
     <Container className="about-container" id="about">
       <Row className="container1"></Row>
       <Row>
-        <Col className="container2 my-5">
+        <Col className="container2 my-5 mb-5">
           <Container>
             <Row>
               <Col>
                 <h1 className="about-title">
-                  When it comes to fitness,
-                  <br /> GymGenie is your personal trainer, nutritionist and
-                  motivator.
+                  Meet <span className="text-highlight">GymGenie</span> your
+                  personal trainer, nutritionist and motivator.
                 </h1>
                 <p className="about-text">
                   Discover GymGenie, the ultimate solution for your fitness
@@ -40,6 +39,7 @@ export default function About() {
                 >
                   Learn More
                 </Link>
+                <hr className="hr-about" />
               </Col>
               <Col>
                 <img src={GymGenie} className="about-img mt-0" />
