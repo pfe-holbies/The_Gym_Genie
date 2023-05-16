@@ -1,19 +1,52 @@
 import { Modal, Container, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../utils/authContext';
+import { FETCH_WORKOUT, FETCH_MEAL } from '../../GraphQL/openAIMutations';
+import { useMutation } from '@apollo/client';
 
 export default function ModalComponent() {
   const { user } = useContext(AuthContext);
 
-  const [showWorkouts, setShowWorkouts] = useState(false);
-  const [showMeals, setShowMeals] = useState(false);
+  const [
+    fetchWorkout,
+    { loading: workoutLoading, error: workoutError, data: workoutData },
+  ] = useMutation(FETCH_WORKOUT);
 
-  const handleClose = () => {
-    setShowWorkouts(false);
-    setShowMeals(false);
+  const [
+    fetchMeal,
+    { loading: mealLoading, error: mealError, data: mealData },
+  ] = useMutation(FETCH_MEAL);
+
+  const [showWorkoutModal, setShowWorkoutModal] = useState(false);
+  const [showMealModal, setShowMealModal] = useState(false);
+
+  const handleWorkoutClick = async () => {
+    try {
+      setShowWorkoutModal(true);
+      await fetchWorkout();
+      if (workoutData) {
+        console.log('workoutData fetched!');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setShowWorkoutModal(false);
+    }
   };
-  const handleShowWorkouts = () => setShowWorkouts(true);
-  const handleShowMeals = () => setShowMeals(true);
+
+  const handleMealClick = async () => {
+    try {
+      setShowMealModal(true);
+      await fetchMeal();
+      if (mealData) {
+        console.log('mealData fetched!');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setShowMealModal(false);
+    }
+  };
 
   if (user) {
     return (
@@ -38,12 +71,12 @@ export default function ModalComponent() {
 
           <Row xs={2} md={3} lg={8}>
             <Col>
-              <Button className="btn-wish" onClick={handleShowWorkouts}>
+              <Button className="btn-wish" onClick={handleWorkoutClick}>
                 Get workouts
               </Button>
               <Modal
-                show={showWorkouts}
-                onHide={handleClose}
+                show={showWorkoutModal}
+                onHide={() => setShowWorkoutModal(false)}
                 className="custom-modal"
               >
                 <Modal.Header closeButton>
@@ -61,19 +94,17 @@ export default function ModalComponent() {
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button className="btn-modal" onClick={handleClose}>
-                    Save Changes
-                  </Button>
+                  <p>{workoutData && 'Workout Fetched'}</p>
                 </Modal.Footer>
               </Modal>
             </Col>
             <Col>
-              <Button className="btn-wish" onClick={handleShowMeals}>
+              <Button className="btn-wish" onClick={handleMealClick}>
                 Get meals
               </Button>
               <Modal
-                show={showMeals}
-                onHide={handleClose}
+                show={showMealModal}
+                onHide={() => setShowMealModal(false)}
                 className="custom-modal"
               >
                 <Modal.Header closeButton>
@@ -91,9 +122,7 @@ export default function ModalComponent() {
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button className="btn-modal" onClick={handleClose}>
-                    Save Changes
-                  </Button>
+                  {mealData && <p>Meal Plan is fetched</p>}
                 </Modal.Footer>
               </Modal>
             </Col>

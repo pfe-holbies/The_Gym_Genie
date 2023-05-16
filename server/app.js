@@ -5,20 +5,21 @@ const schema = require('./graphql/schema');
 const { connectDB } = require('./config/db');
 const { is_authenticated } = require('./middleware/is_authenticated');
 const cors = require('cors');
+const path = require('path');
 
-// Initilize Express App for GraphQL API
+// Initialize Express App for GraphQL API
 const GraphQLServer = express();
 
 // Load environment variables
 dotenv.config();
 
-// connection to MongoDB
+// Connection to MongoDB
 connectDB();
 
-// add CORS
+// Add CORS
 GraphQLServer.use(cors());
 
-// Authentication middleware layer for resources protection
+// Authentication middleware layer for resource protection
 GraphQLServer.use(is_authenticated);
 
 // Routes
@@ -26,12 +27,13 @@ GraphQLServer.get('/', (req, res) => {
   res.json({ msg: 'Welcome! Go to /graphql' });
 });
 
+
 // GraphQL API
 GraphQLServer.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    // only for development -- GUI
+    // Only for development - GraphiQL GUI
     graphiql: process.env.NODE_ENV === 'development',
   })
 );

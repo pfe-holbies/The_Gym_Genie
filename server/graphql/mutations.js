@@ -229,7 +229,7 @@ const fetchMealMutation = {
     -Task: write a personalized meal plan for one week for your master ${username} don't forget to mention to him/her by name ${username} his/her age ${age}-year-old his/her gender${gender} with his/her ${activityLevel} activity level with  his/her${dietType} diet and  his/her${foodAllergies} food Allergies.
     -Topic: Personalized Diet and Nutrition plan
     -Layout: Greeting, Introduction, Body, Conclusion
-    -Keywords: Day + Breakfast + Lunch + Dinner + Snacks. Always start the daily meal with the Day number and the meal by either, Breakfast: Lunch: Dinner: Snacks:.
+    -Keywords: Day + Breakfast + Lunch + Dinner + Snacks. Always start the daily meal with the Day +  number for example Day 1 : Day 2 : and the meal by either, Breakfast: Lunch: Dinner: Snacks:.
     Always end the meal plan with a conclusion for the user starting with the word Conclusion include the word conclusion only once. 
     -Style: Poetic Rythme Persuasive Creative Descriptive
     -Tone: Witty Funny Encouraging  Cooperative Joyful

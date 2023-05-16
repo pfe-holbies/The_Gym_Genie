@@ -24,7 +24,7 @@ const AuthContext = createContext({
   logout: () => {},
 });
 
-// reducer function  handles state updates based on the dispatched action
+// reducer function handles state updates based on the dispatched action
 function authReducer(state, action) {
   switch (action.type) {
     case 'LOGIN': // LOGIN case: sets user property to the action's payload
@@ -43,7 +43,6 @@ function authReducer(state, action) {
 }
 
 // AuthProvider component uses useReducer to manage state updates with the authReducer function and initialState.
-
 function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 

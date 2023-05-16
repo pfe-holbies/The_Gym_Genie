@@ -1,6 +1,6 @@
 import Navhome from '../../components/Home/Navhome';
 import ModalComponent from '../../components/Plan/ModalComponent';
-import AccordionTest from '../../components/Plan/Accordion';
+import AccordionComponent from '../../components/Plan/AccordionComponent';
 import './Plan.css';
 
 export default function Plan() {
@@ -8,7 +8,7 @@ export default function Plan() {
     <>
       <Navhome hideLinks={false} />
       <ModalComponent />
-      <AccordionTest />
+      <AccordionComponent />
     </>
   );
 }

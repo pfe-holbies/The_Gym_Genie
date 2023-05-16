@@ -161,7 +161,7 @@ text-shadow: var(--gold-clr) 0px 0px 10px;
     justify-content: center !important;
     align-items: center !important;
     width: 1100px;
-    max-height: 2000px;
+    height: 300px;
     text-align: center;
     padding: 0 0 0 0;
     margin: 10% 0 0 0;
@@ -177,18 +177,18 @@ text-shadow: var(--gold-clr) 0px 0px 10px;
     box-shadow: 0px 5px 10px var(--gold-clr);
     transition: background 0.2s ease-in-out;
 } 
+
 .accordion-card {
+    
     background-color: var(--color-white);
-    margin: 2rem 0 2rem 10rem  !important;
-    border-radius: 20%;
-    border: 1px solid var(--primary-clr) !important;
+    border-radius: 5%;
+    border: 2px solid var(--primary-clr) !important;
     box-shadow: 0px 5px 10px var(--gold-clr);
     max-width: 850px !important;
+    margin: 5% 0 0 8rem;
 }
 
-.card-header{
-    background-color:var(--primary-clr) !important;
-    border-radius: 50%;
-    border: 2px solid var(--gold-clr) !important;
-    max-width: 200px !important;
+button.accordion-button.collapsed {
+    background-color: transparent !important;
+    border: none !important;
 }

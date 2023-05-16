@@ -117,6 +117,19 @@ export default function SignUpForm() {
 
             <Col>
               <Form.Group className="mb-3">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Email..."
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <div className="d-flex">
                   <Form.Control
@@ -131,19 +144,6 @@ export default function SignUpForm() {
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Email..."
-                  onChange={(e) => setEmail(e.target.value)}
-                />
               </Form.Group>
             </Col>
           </Row>
