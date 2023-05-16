@@ -35,7 +35,7 @@ export default function LoginForm() {
   const [loginMutation] = useMutation(LOG_USER, {
     update(_, { data: { loginMutation: userData } }) {
       context.login(userData);
-      navigate('/plan');
+      navigate('/dashboard');
     },
     variables: {
       username,
