@@ -48,17 +48,17 @@ npm install
 
 ```
 
-# Run client (:3000) & backend (:5000)
+# Run client (:3000) & server (:5000/graphql) for graphiql tool
 npm start (npm-run-all)
 
-# Run backend only
+# Run server only
 npm run dev
 ```
 
 ## Build
 
 ```
-# Create frontend prod build
+# Create client prod build
 cd client
 npm run build
 ```
